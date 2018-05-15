@@ -5,11 +5,11 @@ import com.iota.iri.model.StateDiff;
 import com.iota.iri.storage.Tangle;
 
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by paul on 5/6/17.
  */
+
 public class StateDiffViewModel {
     private StateDiff stateDiff;
     private Hash hash;
@@ -28,7 +28,7 @@ public class StateDiffViewModel {
         return tangle.maybeHas(StateDiff.class, hash);
     }
 
-    StateDiffViewModel(final StateDiff diff, final Hash hash) {
+    public StateDiffViewModel(final StateDiff diff, final Hash hash) {
         this.hash = hash;
         this.stateDiff = diff == null || diff.state == null ? new StateDiff(): diff;
     }

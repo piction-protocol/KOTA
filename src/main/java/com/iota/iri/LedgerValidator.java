@@ -220,8 +220,8 @@ public class LedgerValidator {
 
                     log.info(logMessage.toString());
                 }
-                if (StateDiffViewModel.maybeExists(tangle, candidateMilestone.getHash())) {
-                    StateDiffViewModel stateDiffViewModel = StateDiffViewModel.load(tangle, candidateMilestone.getHash());
+                if (StateDiffViewModel.Companion.maybeExists(tangle, candidateMilestone.getHash())) {
+                    StateDiffViewModel stateDiffViewModel = StateDiffViewModel.Companion.load(tangle, candidateMilestone.getHash());
 
                     if (stateDiffViewModel != null && !stateDiffViewModel.isEmpty()) {
                         if (Snapshot.isConsistent(milestone.latestSnapshot.patchedDiff(stateDiffViewModel.getDiff()))) {

@@ -1,6 +1,6 @@
 package com.iota.iri.controllers
 
-import com.iota.iri.model.Approvee
+import com.iota.iri.model.Bundle
 import com.iota.iri.model.Hash
 import com.iota.iri.storage.Indexable
 import com.iota.iri.storage.Tangle
@@ -9,16 +9,16 @@ import com.iota.iri.storage.Tangle
  * Created by paul on 5/15/17.
  */
 
-class ApproveeViewModel : HashesViewModel {
-    private lateinit var self: Approvee
+class BundleViewModel : HashesViewModel {
+    private lateinit var self: Bundle
     private var hash: Indexable? = null
 
     constructor(hash: Hash) {
         this.hash = hash
     }
 
-    private constructor(hashes: Approvee?, hash: Indexable) {
-        this.self = hashes?.let { hashes } ?: Approvee()
+    private constructor(hashes: Bundle?, hash: Indexable) {
+        this.self = hashes?.let { hashes } ?: Bundle()
         this.hash = hash
     }
 
@@ -45,26 +45,26 @@ class ApproveeViewModel : HashesViewModel {
 
     @Throws(Exception::class)
     override fun delete(tangle: Tangle) {
-        tangle.delete(Approvee::class.java, hash)
+        tangle.delete(Bundle::class.java, hash)
     }
 
     @Throws(Exception::class)
-    override fun next(tangle: Tangle): ApproveeViewModel? {
-        val bundlePair = tangle.next(Approvee::class.java, hash)
-        return bundlePair?.hi?.let { ApproveeViewModel(bundlePair.hi as Approvee, bundlePair.low as Hash) }
+    override fun next(tangle: Tangle): BundleViewModel? {
+        val bundlePair = tangle.next(Bundle::class.java, hash)
+        return bundlePair?.hi?.let { BundleViewModel(bundlePair.hi as Bundle, bundlePair.low as Hash) }
     }
 
     companion object {
 
         @Throws(Exception::class)
-        fun load(tangle: Tangle, hash: Indexable): ApproveeViewModel {
-            return ApproveeViewModel(tangle.load(Approvee::class.java, hash) as Approvee, hash)
+        fun load(tangle: Tangle, hash: Indexable): BundleViewModel {
+            return BundleViewModel(tangle.load(Bundle::class.java, hash) as Bundle, hash)
         }
 
         @Throws(Exception::class)
-        fun first(tangle: Tangle): ApproveeViewModel? {
-            val bundlePair = tangle.getFirst(Approvee::class.java, Hash::class.java)
-            return bundlePair?.hi?.let { ApproveeViewModel(bundlePair.hi as Approvee, bundlePair.low as Hash) }
+        fun first(tangle: Tangle): BundleViewModel? {
+            val bundlePair = tangle.getFirst(Bundle::class.java, Hash::class.java)
+            return bundlePair?.hi?.let { BundleViewModel(bundlePair.hi as Bundle, bundlePair.low as Hash) }
         }
     }
 }

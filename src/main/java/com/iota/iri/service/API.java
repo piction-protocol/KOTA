@@ -773,7 +773,7 @@ public class API {
         if (request.containsKey("bundles")) {
             final HashSet<String> bundles = getParameterAsSet(request,"bundles",HASH_SIZE);
             for (final String bundle : bundles) {
-                bundlesTransactions.addAll(BundleViewModel.load(instance.tangle, new Hash(bundle)).getHashes());
+                bundlesTransactions.addAll(BundleViewModel.Companion.load(instance.tangle, new Hash(bundle)).getHashes());
             }
             foundTransactions.addAll(bundlesTransactions);
             containsKey = true;
@@ -794,12 +794,12 @@ public class API {
             final HashSet<String> tags = getParameterAsSet(request,"tags",0);
             for (String tag : tags) {
                 tag = padTag(tag);
-                tagsTransactions.addAll(TagViewModel.load(instance.tangle, new Hash(tag)).getHashes());
+                tagsTransactions.addAll(TagViewModel.Companion.load(instance.tangle, new Hash(tag)).getHashes());
             }
             if (tagsTransactions.isEmpty()) {
                 for (String tag : tags) {
                     tag = padTag(tag);
-                    tagsTransactions.addAll(TagViewModel.loadObsolete(instance.tangle, new Hash(tag)).getHashes());
+                    tagsTransactions.addAll(TagViewModel.Companion.loadObsolete(instance.tangle, new Hash(tag)).getHashes());
                 }
             }
             foundTransactions.addAll(tagsTransactions);

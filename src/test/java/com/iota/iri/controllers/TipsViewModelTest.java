@@ -76,7 +76,7 @@ public class TipsViewModelTest {
     @Test
     public void nonsolidCapacityLimited() throws ExecutionException, InterruptedException {
         TipsViewModel tipsVM = new TipsViewModel();
-        int capacity = TipsViewModel.MAX_TIPS;
+        int capacity = TipsViewModel.Companion.getMAX_TIPS();
         //fill tips list
         for (int i = 0; i < capacity * 2 ; i++) {
             Hash hash = TransactionViewModelTest.getRandomTransactionHash();
@@ -89,7 +89,7 @@ public class TipsViewModelTest {
     @Test
     public void solidCapacityLimited() throws ExecutionException, InterruptedException {
         TipsViewModel tipsVM = new TipsViewModel();
-        int capacity = TipsViewModel.MAX_TIPS;
+        int capacity = TipsViewModel.Companion.getMAX_TIPS();
         //fill tips list
         for (int i = 0; i < capacity * 2 ; i++) {
             Hash hash = TransactionViewModelTest.getRandomTransactionHash();
@@ -103,7 +103,7 @@ public class TipsViewModelTest {
     @Test
     public void totalCapacityLimited() throws ExecutionException, InterruptedException {
         TipsViewModel tipsVM = new TipsViewModel();
-        int capacity = TipsViewModel.MAX_TIPS;
+        int capacity = TipsViewModel.Companion.getMAX_TIPS();
         //fill tips list
         for (int i = 0; i <= capacity * 4; i++) {
             Hash hash = TransactionViewModelTest.getRandomTransactionHash();

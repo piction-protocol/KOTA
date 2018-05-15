@@ -251,7 +251,7 @@ public class TransactionViewModel {
     }
 
     public TagViewModel getTag(Tangle tangle) throws Exception {
-        return TagViewModel.load(tangle, getTagValue());
+        return TagViewModel.Companion.load(tangle, getTagValue());
     }
 
     public Hash getAddressHash() {

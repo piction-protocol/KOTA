@@ -168,7 +168,7 @@ public class MilestoneViewModelTest {
 
     @Test
     public void nextGreaterThan() throws Exception {
-        int milestoneStartIndex = Integer.parseInt(Configuration.MAINNET_MILESTONE_START_INDEX);
+        int milestoneStartIndex = Integer.parseInt(Configuration.Companion.getMAINNET_MILESTONE_START_INDEX());
         int first = milestoneStartIndex + 1;
         int next = first + 1;
         new MilestoneViewModel(next, new Hash("GBCDEBGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUV99999")).store(tangle);

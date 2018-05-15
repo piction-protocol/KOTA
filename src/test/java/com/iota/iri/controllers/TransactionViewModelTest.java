@@ -325,7 +325,7 @@ public class TransactionViewModelTest {
         TransactionViewModel transactionViewModel = new TransactionViewModel(trits, Hash.calculate(SpongeFactory.Mode.CURLP81, trits));
         transactionViewModel.store(tangle);
         Hash hash = transactionViewModel.getHash();
-        Assert.assertArrayEquals(TransactionViewModel.find(tangle, Arrays.copyOf(hash.bytes(), Integer.parseInt(Configuration.REQ_HASH_SIZE))).getBytes(), transactionViewModel.getBytes());
+        Assert.assertArrayEquals(TransactionViewModel.find(tangle, Arrays.copyOf(hash.bytes(), Integer.parseInt(Configuration.Companion.getREQ_HASH_SIZE()))).getBytes(), transactionViewModel.getBytes());
     }
 
     @Test
@@ -336,7 +336,7 @@ public class TransactionViewModelTest {
         TransactionViewModel transactionViewModelNoSave = new TransactionViewModel(trits, Hash.calculate(SpongeFactory.Mode.CURLP81, trits));
         transactionViewModel.store(tangle);
         Hash hash = transactionViewModelNoSave.getHash();
-        Assert.assertFalse(Arrays.equals(TransactionViewModel.find(tangle, Arrays.copyOf(hash.bytes(), Integer.parseInt(Configuration.REQ_HASH_SIZE))).getBytes(), transactionViewModel.getBytes()));
+        Assert.assertFalse(Arrays.equals(TransactionViewModel.find(tangle, Arrays.copyOf(hash.bytes(), Integer.parseInt(Configuration.Companion.getREQ_HASH_SIZE()))).getBytes(), transactionViewModel.getBytes()));
     }
 
     //@Test

@@ -141,16 +141,16 @@ public class IRI {
             configuration.put(DefaultConfSettings.TESTNET, "true");
             configuration.put(DefaultConfSettings.DB_PATH.name(), "testnetdb");
             configuration.put(DefaultConfSettings.DB_LOG_PATH.name(), "testnetdb.log");
-            configuration.put(DefaultConfSettings.COORDINATOR, Configuration.TESTNET_COORDINATOR_ADDRESS);
-            configuration.put(DefaultConfSettings.SNAPSHOT_FILE, Configuration.TESTNET_SNAPSHOT_FILE);
-            configuration.put(DefaultConfSettings.MILESTONE_START_INDEX, Configuration.TESTNET_MILESTONE_START_INDEX);
+            configuration.put(DefaultConfSettings.COORDINATOR, Configuration.Companion.getTESTNET_COORDINATOR_ADDRESS());
+            configuration.put(DefaultConfSettings.SNAPSHOT_FILE, Configuration.Companion.getTESTNET_SNAPSHOT_FILE());
+            configuration.put(DefaultConfSettings.MILESTONE_START_INDEX, Configuration.Companion.getTESTNET_MILESTONE_START_INDEX());
             configuration.put(DefaultConfSettings.SNAPSHOT_SIGNATURE_FILE, "");
-            configuration.put(DefaultConfSettings.MWM, Configuration.TESTNET_MWM);
+            configuration.put(DefaultConfSettings.MWM, Configuration.Companion.getTESTNET_MWM());
             configuration.put(DefaultConfSettings.NUMBER_OF_KEYS_IN_A_MILESTONE,
-                    Configuration.TESTNET_NUM_KEYS_IN_MILESTONE);
-            configuration.put(DefaultConfSettings.TRANSACTION_PACKET_SIZE, Configuration.TESTNET_PACKET_SIZE);
-            configuration.put(DefaultConfSettings.REQUEST_HASH_SIZE, Configuration.TESTNET_REQ_HASH_SIZE);
-            configuration.put(DefaultConfSettings.SNAPSHOT_TIME, Configuration.TESTNET_GLOBAL_SNAPSHOT_TIME);
+                    Configuration.Companion.getTESTNET_NUM_KEYS_IN_MILESTONE());
+            configuration.put(DefaultConfSettings.TRANSACTION_PACKET_SIZE, Configuration.Companion.getTESTNET_PACKET_SIZE());
+            configuration.put(DefaultConfSettings.REQUEST_HASH_SIZE, Configuration.Companion.getTESTNET_REQ_HASH_SIZE());
+            configuration.put(DefaultConfSettings.SNAPSHOT_TIME, Configuration.Companion.getTESTNET_GLOBAL_SNAPSHOT_TIME());
         }
 
         // mandatory args

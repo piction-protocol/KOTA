@@ -47,8 +47,8 @@ class ReplicatorSourceProcessor implements Runnable {
         this.testnet = testnet;
         this.replicatorSinkPool = replicatorSinkPool;
         this.packetSize = testnet
-                ? Integer.parseInt(Configuration.TESTNET_PACKET_SIZE)
-                : Integer.parseInt(Configuration.PACKET_SIZE);
+                ? Integer.parseInt(Configuration.Companion.getTESTNET_PACKET_SIZE())
+                : Integer.parseInt(Configuration.Companion.getPACKET_SIZE());
     }
 
     @Override

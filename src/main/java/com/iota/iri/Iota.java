@@ -71,11 +71,11 @@ public class Iota {
                 coordinator = new Hash(coordinatorTrytes);
             } else {
                 log.warn("No coordinator address given for testnet. Defaulting to "
-                        + Configuration.TESTNET_COORDINATOR_ADDRESS);
-                coordinator = new Hash(Configuration.TESTNET_COORDINATOR_ADDRESS);
+                        + Configuration.Companion.getTESTNET_COORDINATOR_ADDRESS());
+                coordinator = new Hash(Configuration.Companion.getTESTNET_COORDINATOR_ADDRESS());
             }
         } else {
-            coordinator = new Hash(Configuration.MAINNET_COORDINATOR_ADDRESS);
+            coordinator = new Hash(Configuration.Companion.getMAINNET_COORDINATOR_ADDRESS());
         }
         tangle = new Tangle();
         messageQ = new MessageQ(configuration.integer(Configuration.DefaultConfSettings.ZMQ_PORT),

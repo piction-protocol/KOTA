@@ -150,13 +150,13 @@ public class API {
             return;
         }
 
-        if (!SignedFiles.isFileSignatureValid(Configuration.PREVIOUS_EPOCHS_SPENT_ADDRESSES_TXT,
-                Configuration.PREVIOUS_EPOCH_SPENT_ADDRESSES_SIG,
+        if (!SignedFiles.isFileSignatureValid(Configuration.Companion.getPREVIOUS_EPOCHS_SPENT_ADDRESSES_TXT(),
+                Configuration.Companion.getPREVIOUS_EPOCH_SPENT_ADDRESSES_SIG(),
                 Snapshot.SNAPSHOT_PUBKEY, Snapshot.SNAPSHOT_PUBKEY_DEPTH, Snapshot.SPENT_ADDRESSES_INDEX)) {
             throw new RuntimeException("Failed to load previousEpochsSpentAddresses - signature failed.");
         }
 
-        InputStream in = Snapshot.class.getResourceAsStream(Configuration.PREVIOUS_EPOCHS_SPENT_ADDRESSES_TXT);
+        InputStream in = Snapshot.class.getResourceAsStream(Configuration.Companion.getPREVIOUS_EPOCHS_SPENT_ADDRESSES_TXT());
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         String line;
         try {

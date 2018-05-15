@@ -60,11 +60,11 @@ public class TipsManagerTest {
         MessageQ messageQ = new MessageQ(0, null, 1, false);
         TransactionRequester transactionRequester = new TransactionRequester(tangle, messageQ);
         TransactionValidator transactionValidator = new TransactionValidator(tangle, tipsViewModel, transactionRequester,
-                messageQ, Long.parseLong(Configuration.GLOBAL_SNAPSHOT_TIME));
-        int milestoneStartIndex = Integer.parseInt(Configuration.MAINNET_MILESTONE_START_INDEX);
-        int numOfKeysInMilestone = Integer.parseInt(Configuration.MAINNET_NUM_KEYS_IN_MILESTONE);
+                messageQ, Long.parseLong(Configuration.Companion.getGLOBAL_SNAPSHOT_TIME()));
+        int milestoneStartIndex = Integer.parseInt(Configuration.Companion.getMAINNET_MILESTONE_START_INDEX());
+        int numOfKeysInMilestone = Integer.parseInt(Configuration.Companion.getMAINNET_NUM_KEYS_IN_MILESTONE());
         Milestone milestone = new Milestone(tangle, Hash.NULL_HASH, Snapshot.init(
-                Configuration.MAINNET_SNAPSHOT_FILE, Configuration.MAINNET_SNAPSHOT_SIG_FILE, false).clone(),
+                Configuration.Companion.getMAINNET_SNAPSHOT_FILE(), Configuration.Companion.getMAINNET_SNAPSHOT_SIG_FILE(), false).clone(),
                 transactionValidator, false, messageQ, numOfKeysInMilestone,
                 milestoneStartIndex, true);
         LedgerValidator ledgerValidator = new LedgerValidator(tangle, milestone, transactionRequester, messageQ);

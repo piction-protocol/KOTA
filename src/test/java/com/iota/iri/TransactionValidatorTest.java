@@ -42,7 +42,7 @@ public class TransactionValidatorTest {
     MessageQ messageQ = new MessageQ(0, "", 0, false);
     TransactionRequester txRequester = new TransactionRequester(tangle, messageQ);
     txValidator = new TransactionValidator(tangle, tipsViewModel, txRequester, messageQ,
-            Long.parseLong(Configuration.GLOBAL_SNAPSHOT_TIME));
+            Long.parseLong(Configuration.Companion.getGLOBAL_SNAPSHOT_TIME()));
     txValidator.init(false, MAINNET_MWM);
   }
 

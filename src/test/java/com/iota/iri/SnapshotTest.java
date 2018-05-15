@@ -21,8 +21,8 @@ public class SnapshotTest {
     @BeforeClass
     public static void beforeClass() {
         try {
-            initSnapshot = Snapshot.init(Configuration.MAINNET_SNAPSHOT_FILE,
-                Configuration.MAINNET_SNAPSHOT_SIG_FILE, false);
+            initSnapshot = Snapshot.init(Configuration.Companion.getMAINNET_SNAPSHOT_FILE(),
+                    Configuration.Companion.getMAINNET_SNAPSHOT_SIG_FILE(), false);
         } catch (IOException e) {
             throw new UncheckedIOException("Problem initiating snapshot", e);
         }

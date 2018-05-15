@@ -32,7 +32,7 @@ class BundleViewModel : HashesViewModel {
     }
 
     override fun addHash(theHash: Hash): Boolean {
-        return hashes.add(theHash)
+        return getHashes().add(theHash)
     }
 
     override fun getIndex(): Indexable? {

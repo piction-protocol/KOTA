@@ -10,6 +10,7 @@ import com.iota.iri.storage.Tangle
  */
 
 class AddressViewModel : HashesViewModel {
+
     private lateinit var self: Address
     private var hash: Indexable? = null
 
@@ -32,7 +33,7 @@ class AddressViewModel : HashesViewModel {
     }
 
     override fun addHash(theHash: Hash): Boolean {
-        return hashes.add(theHash)
+        return getHashes().add(theHash)
     }
 
     override fun getIndex(): Indexable? {

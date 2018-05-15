@@ -1,6 +1,6 @@
 ![license](https://img.shields.io/github/license/iotaledger/iri.svg)
 
-## IOTA
+## KOTA
 
 The KOTA repository is the main [IOTA-iri](https://github.com/iotaledger/iri) Reference Implementation and the embodiment of the IOTA network specification. 
 

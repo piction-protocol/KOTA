@@ -42,7 +42,7 @@ public final class Hash implements Serializable, Indexable {
 
 
     public static Hash calculate(SpongeFactory.Mode mode, int[] trits) {
-        return calculate(trits, 0, trits.length, SpongeFactory.create(mode));
+        return calculate(trits, 0, trits.length, SpongeFactory.INSTANCE.create(mode));
     }
 
     public static Hash calculate(byte[] bytes, int tritsLength, final Sponge curl) {

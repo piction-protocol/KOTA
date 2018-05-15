@@ -157,7 +157,7 @@ public class NodeIntegrationTests {
 
         int[] hash = new int[Curl.HASH_LENGTH];
 
-        Sponge curl = customCurl == null ? SpongeFactory.create(SpongeFactory.Mode.CURLP81) : customCurl;
+        Sponge curl = customCurl == null ? SpongeFactory.INSTANCE.create(SpongeFactory.Mode.CURLP81) : customCurl;
         curl.reset();
 
         for (int i = 0; i < transactions.size(); i++) {

@@ -38,7 +38,7 @@ public class ISSInPlace {
       }
     }
 
-    final Sponge hash = SpongeFactory.create(mode);
+    final Sponge hash = SpongeFactory.INSTANCE.create(mode);
     hash.absorb(subseed, 0, subseed.length);
     hash.squeeze(subseed, 0, subseed.length);
   }
@@ -59,7 +59,7 @@ public class ISSInPlace {
       throw new RuntimeException("Invalid number of key fragments: " + numberOfFragments);
     }
 
-    final Sponge hash = SpongeFactory.create(mode);
+    final Sponge hash = SpongeFactory.INSTANCE.create(mode);
     hash.absorb(subseed, 0, subseed.length);
     hash.squeeze(key, 0, key.length);
   }
@@ -74,7 +74,7 @@ public class ISSInPlace {
       throw new IllegalArgumentException("Invalid digests length");
     }
 
-    final Sponge hash = SpongeFactory.create(mode);
+    final Sponge hash = SpongeFactory.INSTANCE.create(mode);
 
     for (int i = 0; i < key.length / FRAGMENT_LENGTH; i++) {
 
@@ -103,7 +103,7 @@ public class ISSInPlace {
       throw new IllegalArgumentException("Invalid address length");
     }
 
-    final Sponge hash = SpongeFactory.create(mode);
+    final Sponge hash = SpongeFactory.INSTANCE.create(mode);
     hash.absorb(digests, 0, digests.length);
     hash.squeeze(address, 0, address.length);
   }
@@ -123,7 +123,7 @@ public class ISSInPlace {
     }
 
     final int[] buffer = Arrays.copyOfRange(signatureFragment, sfOff, sfOff + FRAGMENT_LENGTH);
-    final Sponge hash = SpongeFactory.create(mode);
+    final Sponge hash = SpongeFactory.INSTANCE.create(mode);
 
     for (int j = 0; j < NUMBER_OF_FRAGMENT_CHUNKS; j++) {
 

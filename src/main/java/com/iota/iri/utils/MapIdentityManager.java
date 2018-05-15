@@ -53,7 +53,7 @@ public class MapIdentityManager implements IdentityManager {
             Converter.trits(trytes, in_trits, 0);
             int[] hash_trits = new int[Curl.HASH_LENGTH];
             Sponge curl;
-            curl = SpongeFactory.create(SpongeFactory.Mode.CURLP81);
+            curl = SpongeFactory.INSTANCE.create(SpongeFactory.Mode.CURLP81);
             curl.absorb(in_trits, 0, in_trits.length);
             curl.squeeze(hash_trits, 0, Curl.HASH_LENGTH);
             String out_trytes = Converter.trytes(hash_trits);

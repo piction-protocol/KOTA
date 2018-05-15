@@ -28,8 +28,8 @@ public class BundleValidator {
                 final long lastIndex = transactionViewModel.lastIndex();
                 long bundleValue = 0;
                 int i = 0;
-                final Sponge curlInstance = SpongeFactory.create(SpongeFactory.Mode.KERL);
-                final Sponge addressInstance = SpongeFactory.create(SpongeFactory.Mode.KERL);
+                final Sponge curlInstance = SpongeFactory.INSTANCE.create(SpongeFactory.Mode.KERL);
+                final Sponge addressInstance = SpongeFactory.INSTANCE.create(SpongeFactory.Mode.KERL);
 
                 final int[] addressTrits = new int[TransactionViewModel.ADDRESS_TRINARY_SIZE];
                 final int[] bundleHashTrits = new int[TransactionViewModel.BUNDLE_TRINARY_SIZE];

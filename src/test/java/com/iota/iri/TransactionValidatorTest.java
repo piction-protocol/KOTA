@@ -91,7 +91,7 @@ public class TransactionValidatorTest {
     Converter.copyTrits(0, trits, 0, trits.length);
     byte[] bytes = Converter.allocateBytesForTrits(trits.length);
     Converter.bytes(trits, 0, bytes, 0, trits.length);
-    TransactionValidator.validate(bytes, txValidator.getMinWeightMagnitude(), SpongeFactory.create(SpongeFactory.Mode.CURLP81));
+    TransactionValidator.validate(bytes, txValidator.getMinWeightMagnitude(), SpongeFactory.INSTANCE.create(SpongeFactory.Mode.CURLP81));
   }
 
   @Test

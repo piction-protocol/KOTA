@@ -60,7 +60,7 @@ public class UDPReceiver {
 
             log.info("Spawning Receiver Thread");
 
-            final Sponge curl = SpongeFactory.create(SpongeFactory.Mode.CURLP81);
+            final Sponge curl = SpongeFactory.INSTANCE.create(SpongeFactory.Mode.CURLP81);
             final byte[] requestedTransaction = new byte[Hash.SIZE_IN_BYTES];
 
             int processed = 0, dropped = 0;

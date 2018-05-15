@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class SignedFiles {
 
     public static boolean isFileSignatureValid(String filename, String signatureFilename, String publicKey, int depth, int index) throws IOException {
-        int[] signature = digestFile(filename, SpongeFactory.create(SpongeFactory.Mode.KERL));
+        int[] signature = digestFile(filename, SpongeFactory.INSTANCE.create(SpongeFactory.Mode.KERL));
         return validateSignature(signatureFilename, publicKey, depth, index, signature);
     }
 

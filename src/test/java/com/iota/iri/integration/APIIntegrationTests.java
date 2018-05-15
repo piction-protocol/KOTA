@@ -465,7 +465,7 @@ public class APIIntegrationTests {
     }
 
     private String getHash(String temp) {
-        return Hash.calculate(Converter.allocatingTritsFromTrytes(temp), 0, TransactionViewModel.TRINARY_SIZE, SpongeFactory.create(SpongeFactory.Mode.CURLP81)).toString();
+        return Hash.calculate(Converter.allocatingTritsFromTrytes(temp), 0, TransactionViewModel.TRINARY_SIZE, SpongeFactory.INSTANCE.create(SpongeFactory.Mode.CURLP81)).toString();
     }
 
 }

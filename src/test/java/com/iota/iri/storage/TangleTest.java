@@ -1,5 +1,6 @@
 package com.iota.iri.storage;
 
+import com.iota.iri.controllers.TransactionViewModel;
 import com.iota.iri.hash.Curl;
 import com.iota.iri.hash.Sponge;
 import com.iota.iri.hash.SpongeFactory;
@@ -7,7 +8,6 @@ import com.iota.iri.model.Hash;
 import com.iota.iri.model.Transaction;
 import com.iota.iri.storage.rocksDB.RocksDBPersistenceProvider;
 import com.iota.iri.utils.Converter;
-import com.iota.iri.controllers.TransactionViewModel;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -51,7 +51,7 @@ public class TangleTest {
         int[] hash = new int[Curl.HASH_LENGTH],
                 trits = Arrays.stream(new int[TransactionViewModel.TRINARY_SIZE])
                         .map(i -> r.nextInt(3)-1).toArray();
-        Sponge curl = SpongeFactory.create(SpongeFactory.Mode.CURLP81);
+        Sponge curl = SpongeFactory.INSTANCE.create(SpongeFactory.Mode.CURLP81);
         curl.absorb(trits, 0, trits.length);
         curl.squeeze(hash, 0, Curl.HASH_LENGTH);
         transaction.setBytes(Converter.allocateBytesForTrits(trits.length));

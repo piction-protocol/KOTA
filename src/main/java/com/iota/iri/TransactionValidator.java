@@ -105,12 +105,12 @@ public class TransactionValidator {
     }
 
     public static TransactionViewModel validate(final int[] trits, int minWeightMagnitude) {
-        TransactionViewModel transactionViewModel = new TransactionViewModel(trits, Hash.calculate(trits, 0, trits.length, SpongeFactory.create(SpongeFactory.Mode.CURLP81)));
+        TransactionViewModel transactionViewModel = new TransactionViewModel(trits, Hash.calculate(trits, 0, trits.length, SpongeFactory.INSTANCE.create(SpongeFactory.Mode.CURLP81)));
         runValidation(transactionViewModel, minWeightMagnitude);
         return transactionViewModel;
     }
     public static TransactionViewModel validate(final byte[] bytes, int minWeightMagnitude) {
-        return validate(bytes, minWeightMagnitude, SpongeFactory.create(SpongeFactory.Mode.CURLP81));
+        return validate(bytes, minWeightMagnitude, SpongeFactory.INSTANCE.create(SpongeFactory.Mode.CURLP81));
 
     }
 

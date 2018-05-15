@@ -1157,7 +1157,7 @@ public class API {
 
 // let's calculate the bundle essence :S
         int startIdx = TransactionViewModel.ESSENCE_TRINARY_OFFSET / 3;
-        Sponge sponge = SpongeFactory.create(SpongeFactory.Mode.KERL);
+        Sponge sponge = SpongeFactory.INSTANCE.create(SpongeFactory.Mode.KERL);
 
         for (String tx : transactions) {
             String essence = tx.substring(startIdx);

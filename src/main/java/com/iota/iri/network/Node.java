@@ -251,7 +251,7 @@ public class Node {
 
                     if (!cached) {
                         //if not, then validate
-                        receivedTransactionViewModel = new TransactionViewModel(receivedData, Hash.calculate(receivedData, TransactionViewModel.TRINARY_SIZE, SpongeFactory.create(SpongeFactory.Mode.CURLP81)));
+                        receivedTransactionViewModel = new TransactionViewModel(receivedData, Hash.calculate(receivedData, TransactionViewModel.TRINARY_SIZE, SpongeFactory.INSTANCE.create(SpongeFactory.Mode.CURLP81)));
                         receivedTransactionHash = receivedTransactionViewModel.getHash();
                         TransactionValidator.runValidation(receivedTransactionViewModel, transactionValidator.getMinWeightMagnitude());
 

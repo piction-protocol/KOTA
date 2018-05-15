@@ -51,7 +51,7 @@ class BundleViewModel : HashesViewModel {
     @Throws(Exception::class)
     override fun next(tangle: Tangle): BundleViewModel? {
         val bundlePair = tangle.next(Bundle::class.java, hash)
-        return bundlePair?.hi?.let { BundleViewModel(bundlePair.hi as Bundle, bundlePair.low as Hash) }
+        return bundlePair?.high?.let { BundleViewModel(bundlePair.high as Bundle, bundlePair.low as Hash) }
     }
 
     companion object {
@@ -64,7 +64,7 @@ class BundleViewModel : HashesViewModel {
         @Throws(Exception::class)
         fun first(tangle: Tangle): BundleViewModel? {
             val bundlePair = tangle.getFirst(Bundle::class.java, Hash::class.java)
-            return bundlePair?.hi?.let { BundleViewModel(bundlePair.hi as Bundle, bundlePair.low as Hash) }
+            return bundlePair?.high?.let { BundleViewModel(bundlePair.high as Bundle, bundlePair.low as Hash) }
         }
     }
 }

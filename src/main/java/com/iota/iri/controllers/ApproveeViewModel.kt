@@ -51,7 +51,7 @@ class ApproveeViewModel : HashesViewModel {
     @Throws(Exception::class)
     override fun next(tangle: Tangle): ApproveeViewModel? {
         val bundlePair = tangle.next(Approvee::class.java, hash)
-        return bundlePair?.hi?.let { ApproveeViewModel(bundlePair.hi as Approvee, bundlePair.low as Hash) }
+        return bundlePair?.high?.let { ApproveeViewModel(bundlePair.high as Approvee, bundlePair.low as Hash) }
     }
 
     companion object {
@@ -64,7 +64,7 @@ class ApproveeViewModel : HashesViewModel {
         @Throws(Exception::class)
         fun first(tangle: Tangle): ApproveeViewModel? {
             val bundlePair = tangle.getFirst(Approvee::class.java, Hash::class.java)
-            return bundlePair?.hi?.let { ApproveeViewModel(bundlePair.hi as Approvee, bundlePair.low as Hash) }
+            return bundlePair?.high?.let { ApproveeViewModel(bundlePair.high as Approvee, bundlePair.low as Hash) }
         }
     }
 }

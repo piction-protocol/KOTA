@@ -298,7 +298,7 @@ public class RocksDBPersistenceProvider implements PersistenceProvider {
             for (Pair<Indexable, Persistable> entry : models) {
 
                 Indexable key = entry.low;
-                Persistable value = entry.hi;
+                Persistable value = entry.high;
 
                 ColumnFamilyHandle handle = classTreeMap.get(value.getClass());
                 ColumnFamilyHandle referenceHandle = metadataReference.get(value.getClass());

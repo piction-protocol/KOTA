@@ -1,14 +1,10 @@
 package com.iota.iri.hash;
 
-import com.iota.iri.model.Hash;
 import com.iota.iri.utils.Converter;
 import com.iota.iri.utils.Pair;
 import org.junit.Assert;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -43,7 +39,7 @@ public class CurlTest {
         curl = new Curl(true, SpongeFactory.Mode.CURLP81);
         curl.absorb(Converter.longPair(in_trits), 0, in_trits.length);
         curl.squeeze(hashPair, 0, Curl.HASH_LENGTH);
-        int[] hash_trits = Converter.trits(hashPair.low, hashPair.hi);
+        int[] hash_trits = Converter.trits(hashPair.low, hashPair.high);
         String out_trytes = Converter.trytes(hash_trits);
         Assert.assertEquals(hash, out_trytes);
     }
@@ -82,7 +78,7 @@ public class CurlTest {
         curl.absorb(in_pair, 0, in_trits.length);
         curl.squeeze(hashPair, 0, Curl.HASH_LENGTH);
         diff2 = System.nanoTime() - start2;
-        System.arraycopy(Converter.trits(hashPair.low, hashPair.hi), 0, hash_trits, 0, Curl.HASH_LENGTH);
+        System.arraycopy(Converter.trits(hashPair.low, hashPair.high), 0, hash_trits, 0, Curl.HASH_LENGTH);
         String out_trytes = Converter.trytes(hash_trits);
         Assert.assertEquals(hash, out_trytes);
         System.out.println(diff1);

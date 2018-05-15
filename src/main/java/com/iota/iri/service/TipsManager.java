@@ -152,7 +152,7 @@ public class TipsManager {
         //branch (extraTip)
         int milestoneIndex = Math.max(milestone.latestSolidSubtangleMilestoneIndex - depth - 1, 0);
         MilestoneViewModel milestoneViewModel =
-                MilestoneViewModel.findClosestNextMilestone(tangle, milestoneIndex, testnet, milestoneStartIndex);
+                MilestoneViewModel.Companion.findClosestNextMilestone(tangle, milestoneIndex, testnet, milestoneStartIndex);
         if (milestoneViewModel != null && milestoneViewModel.getHash() != null) {
             return milestoneViewModel.getHash();
         }

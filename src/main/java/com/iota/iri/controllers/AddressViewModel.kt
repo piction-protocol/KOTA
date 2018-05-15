@@ -1,14 +1,9 @@
 package com.iota.iri.controllers
 
 import com.iota.iri.model.Address
-import com.iota.iri.model.Bundle
 import com.iota.iri.model.Hash
 import com.iota.iri.storage.Indexable
-import com.iota.iri.storage.Persistable
 import com.iota.iri.storage.Tangle
-import com.iota.iri.utils.Pair
-
-import java.util.HashMap
 
 /**
  * Created by paul on 5/15/17.
@@ -56,8 +51,8 @@ class AddressViewModel : HashesViewModel {
     @Throws(Exception::class)
     override fun next(tangle: Tangle): AddressViewModel? {
         val bundlePair = tangle.next(Address::class.java, hash)
-        return bundlePair?.hi?.let {
-            AddressViewModel(bundlePair.hi as Address, bundlePair.low as Hash)
+        return bundlePair?.high?.let {
+            AddressViewModel(bundlePair.high as Address, bundlePair.low as Hash)
         }
     }
 
@@ -71,8 +66,8 @@ class AddressViewModel : HashesViewModel {
         @Throws(Exception::class)
         fun first(tangle: Tangle): AddressViewModel? {
             val bundlePair = tangle.getFirst(Address::class.java, Hash::class.java)
-            return bundlePair?.hi?.let {
-                AddressViewModel(bundlePair.hi as Address, bundlePair.low as Hash)
+            return bundlePair?.high?.let {
+                AddressViewModel(bundlePair.high as Address, bundlePair.low as Hash)
             }
         }
     }

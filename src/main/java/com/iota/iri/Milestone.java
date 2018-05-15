@@ -108,7 +108,7 @@ public class Milestone {
                                         final Validity valid = validateMilestone(mode, t, getIndex(t));
                                         switch (valid) {
                                             case VALID:
-                                                MilestoneViewModel milestoneViewModel = MilestoneViewModel.latest(tangle);
+                                                MilestoneViewModel milestoneViewModel = MilestoneViewModel.Companion.latest(tangle);
                                                 if (milestoneViewModel != null && milestoneViewModel.index() > latestMilestoneIndex) {
                                                     latestMilestone = milestoneViewModel.getHash();
                                                     latestMilestoneIndex = milestoneViewModel.index();
@@ -184,7 +184,7 @@ public class Milestone {
             return INVALID;
         }
 
-        if (MilestoneViewModel.get(tangle, index) != null) {
+        if (MilestoneViewModel.Companion.get(tangle, index) != null) {
             // Already validated.
             return VALID;
         }
@@ -227,9 +227,9 @@ public class Milestone {
 
     void updateLatestSolidSubtangleMilestone() throws Exception {
         MilestoneViewModel milestoneViewModel;
-        MilestoneViewModel latest = MilestoneViewModel.latest(tangle);
+        MilestoneViewModel latest = MilestoneViewModel.Companion.latest(tangle);
         if (latest != null) {
-            for (milestoneViewModel = MilestoneViewModel.findClosestNextMilestone(
+            for (milestoneViewModel = MilestoneViewModel.Companion.findClosestNextMilestone(
                     tangle, latestSolidSubtangleMilestoneIndex, testnet, milestoneStartIndex);
                  milestoneViewModel != null && milestoneViewModel.index() <= latest.index() && !shuttingDown;
                  milestoneViewModel = milestoneViewModel.next(tangle)) {

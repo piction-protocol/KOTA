@@ -52,8 +52,8 @@ class TagViewModel : HashesViewModel {
     @Throws(Exception::class)
     override fun next(tangle: Tangle): TagViewModel? {
         val bundlePair = tangle.next(Tag::class.java, hash)
-        return if (bundlePair != null && bundlePair.hi != null) {
-            TagViewModel(bundlePair.hi as Tag, bundlePair.low as Hash)
+        return if (bundlePair != null && bundlePair.high != null) {
+            TagViewModel(bundlePair.high as Tag, bundlePair.low as Hash)
         } else null
     }
 
@@ -77,8 +77,8 @@ class TagViewModel : HashesViewModel {
         @Throws(Exception::class)
         fun first(tangle: Tangle): TagViewModel? {
             val bundlePair = tangle.getFirst(Tag::class.java, Hash::class.java)
-            return if (bundlePair != null && bundlePair.hi != null) {
-                TagViewModel(bundlePair.hi as Tag, bundlePair.low as Hash)
+            return if (bundlePair != null && bundlePair.high != null) {
+                TagViewModel(bundlePair.high as Tag, bundlePair.low as Hash)
             } else null
         }
     }

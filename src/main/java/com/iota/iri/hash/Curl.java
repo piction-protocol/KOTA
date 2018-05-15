@@ -149,7 +149,7 @@ public class Curl implements Sponge {
         int o = offset, l = length, i = 0;
         do {
             System.arraycopy(pair.low, o, stateLow, 0, l < HASH_LENGTH ? l : HASH_LENGTH);
-            System.arraycopy(pair.hi, o, stateHigh, 0, l < HASH_LENGTH ? l : HASH_LENGTH);
+            System.arraycopy(pair.high, o, stateHigh, 0, l < HASH_LENGTH ? l : HASH_LENGTH);
             pairTransform();
             o += HASH_LENGTH;
         } while ((l -= HASH_LENGTH) > 0);
@@ -158,7 +158,7 @@ public class Curl implements Sponge {
     public Pair<long[], long[]> squeeze(Pair<long[], long[]> pair, int offset, int length) {
         int o = offset, l = length, i = 0;
         long[] low = pair.low;
-        long[] hi = pair.hi;
+        long[] hi = pair.high;
         do {
             System.arraycopy(stateLow, 0, low, o, l < HASH_LENGTH ? l : HASH_LENGTH);
             System.arraycopy(stateHigh, 0, hi, o, l < HASH_LENGTH ? l : HASH_LENGTH);

@@ -208,7 +208,7 @@ public class LedgerValidator {
         MilestoneViewModel consistentMilestone = null;
         milestone.latestSnapshot.rwlock.writeLock().lock();
         try {
-            MilestoneViewModel candidateMilestone = MilestoneViewModel.first(tangle);
+            MilestoneViewModel candidateMilestone = MilestoneViewModel.Companion.first(tangle);
             while (candidateMilestone != null) {
                 if (candidateMilestone.index() % 10000 == 0) {
                     StringBuilder logMessage = new StringBuilder();

@@ -1,6 +1,5 @@
 package com.iota.iri.utils;
 
-import java.math.BigInteger;
 import java.util.Arrays;
 
 public class Converter {
@@ -165,24 +164,24 @@ public class Converter {
     }
 
     public static void shiftPair(Pair<long[], long[]> source, Pair<long[], long[]> dest) {
-        if(source.low.length == dest.low.length && source.hi.length == dest.hi.length) {
+        if(source.low.length == dest.low.length && source.high.length == dest.high.length) {
             for(int i = 0; i < dest.low.length; i++) {
                 dest.low[i] <<= 1;
                 dest.low[i] |= source.low[i] & 1;
             }
-            for(int i = 0; i < dest.hi.length; i++) {
-                dest.hi[i] <<= 1;
-                dest.hi[i] |= source.hi[i] & 1;
+            for(int i = 0; i < dest.high.length; i++) {
+                dest.high[i] <<= 1;
+                dest.high[i] |= source.high[i] & 1;
             }
         }
     }
 
     public static int[] trits(final Pair<long[], long[]> pair, final int bitIndex) {
         final int length;
-        if(pair.low.length == pair.hi.length || pair.low.length < pair.hi.length) {
+        if(pair.low.length == pair.high.length || pair.low.length < pair.high.length) {
             length = pair.low.length;
         } else {
-            length = pair.hi.length;
+            length = pair.high.length;
         }
         final int[] trits = new int[length];
         long low;
@@ -190,7 +189,7 @@ public class Converter {
         int mask = 1 << bitIndex;
         for(int i = 0; i < length; i++) {
             low = pair.low[i] & mask;
-            hi = pair.hi[i] & mask;
+            hi = pair.high[i] & mask;
             if( hi == low ) {
                 trits[i] = 0;
             } else if ( low == 0 ) {

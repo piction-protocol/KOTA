@@ -42,9 +42,9 @@ public class MilestoneViewModelTest {
         Hash milestoneHash = new Hash("ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUV99999");
         MilestoneViewModel milestoneViewModel = new MilestoneViewModel(++index, milestoneHash);
         assertTrue(milestoneViewModel.store(tangle));
-        MilestoneViewModel.clear();
-        MilestoneViewModel.load(tangle, index);
-        assertEquals(MilestoneViewModel.get(tangle, index).getHash(), milestoneHash);
+        MilestoneViewModel.Companion.clear();
+        MilestoneViewModel.Companion.load(tangle, index);
+        assertEquals(MilestoneViewModel.Companion.get(tangle, index).getHash(), milestoneHash);
     }
 
     @Test
@@ -70,8 +70,8 @@ public class MilestoneViewModelTest {
         Hash milestoneHash = new Hash("CBCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUV99999");
         MilestoneViewModel milestoneViewModel = new MilestoneViewModel(++index, milestoneHash);
         assertTrue(milestoneViewModel.store(tangle));
-        MilestoneViewModel.clear();
-        assertEquals(MilestoneViewModel.get(tangle, index).getHash(), milestoneHash);
+        MilestoneViewModel.Companion.clear();
+        assertEquals(MilestoneViewModel.Companion.get(tangle, index).getHash(), milestoneHash);
 
     }
 
@@ -95,7 +95,7 @@ public class MilestoneViewModelTest {
         Hash milestoneHash = new Hash("ZBCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUV99999");
         MilestoneViewModel milestoneViewModel = new MilestoneViewModel(top, milestoneHash);
         milestoneViewModel.store(tangle);
-        assertTrue(top == MilestoneViewModel.latest(tangle).index());
+        assertTrue(top == MilestoneViewModel.Companion.latest(tangle).index());
     }
 
     @Test
@@ -104,7 +104,7 @@ public class MilestoneViewModelTest {
         Hash milestoneHash = new Hash("99CDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUV99999");
         MilestoneViewModel milestoneViewModel = new MilestoneViewModel(first, milestoneHash);
         milestoneViewModel.store(tangle);
-        assertTrue(first == MilestoneViewModel.first(tangle).index());
+        assertTrue(first == MilestoneViewModel.Companion.first(tangle).index());
     }
 
     @Test
@@ -115,7 +115,7 @@ public class MilestoneViewModelTest {
         firstMilestone.store(tangle);
         new MilestoneViewModel(next, new Hash("9ACDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUV99999")).store(tangle);
 
-        assertTrue(next == MilestoneViewModel.first(tangle).next(tangle).index());
+        assertTrue(next == MilestoneViewModel.Companion.first(tangle).next(tangle).index());
     }
 
     @Test
@@ -173,7 +173,7 @@ public class MilestoneViewModelTest {
         int next = first + 1;
         new MilestoneViewModel(next, new Hash("GBCDEBGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUV99999")).store(tangle);
         new MilestoneViewModel(first, new Hash("GBCDEFGHIJKLMNODQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUV99999")).store(tangle);
-        assertEquals(next, MilestoneViewModel.findClosestNextMilestone(
+        assertEquals(next, MilestoneViewModel.Companion.findClosestNextMilestone(
                 tangle, first, false, milestoneStartIndex).index().intValue());
     }
 
@@ -183,6 +183,6 @@ public class MilestoneViewModelTest {
         int next = 9;
         new MilestoneViewModel(next, new Hash("GBCDEBGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUV99999")).store(tangle);
         new MilestoneViewModel(first, new Hash("GBCDEFGHIJKLMNODQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUV99999")).store(tangle);
-        assertEquals(first, MilestoneViewModel.findClosestPrevMilestone(tangle, next).index().intValue());
+        assertEquals(first, MilestoneViewModel.Companion.findClosestPrevMilestone(tangle, next).index().intValue());
     }
 }

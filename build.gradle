@@ -1,8 +1,9 @@
 apply plugin: 'java'
+apply plugin: 'kotlin'
 apply plugin: 'maven'
 
 group = 'com.iota'
-version = '1.4.2.4'
+version = '1.5'
 
 description = """IRI"""
 
@@ -15,12 +16,25 @@ tasks.withType(JavaCompile) {
 configurations.all {
 }
 
+buildscript {
+    ext.kotlin_version = '1.2.10'
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
 repositories {
-        
      maven { url "https://oss.sonatype.org/content/groups/public/" }
      maven { url "http://repo.maven.apache.org/maven2" }
+     mavenCentral()
 }
+
 dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     compile group: 'org.bouncycastle', name: 'bcprov-jdk15on', version:'1.58'
     compile group: 'org.apache.commons', name: 'commons-lang3', version:'3.5'
     compile group: 'org.slf4j', name: 'slf4j-api', version:'1.7.25'
@@ -38,4 +52,11 @@ dependencies {
     testCompile group: 'com.jayway.restassured', name: 'rest-assured', version:'2.9.0'
     testCompile group: 'com.jayway.jsonpath', name: 'json-path', version:'2.2.0'
     testCompile group: 'junit', name: 'junit', version:'4.12'
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
 }

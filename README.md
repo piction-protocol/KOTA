@@ -15,6 +15,10 @@ Running an IRI node also allows light wallet users a node to directly connect to
 * **Latest release:** 1.4.2.4 Release
 * **License:** GPLv3
 
+## Articles
+- [steemit 0](https://steemit.com/kr/@kilu83/iota)
+- [steemit 1](https://steemit.com/kr/@jruit/iota)
+
 # How to get started
 
 The IOTA network is an independent peer-to-peer network with a first-user, friend-to-friend, network structure:

@@ -1,12 +1,8 @@
-[![Build Status](https://travis-ci.org/iotaledger/iri.svg?branch=dev)](https://travis-ci.org/iotaledger/iri)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/dba5b7ae42024718893991e767390135)](https://www.codacy.com/app/iotaledger/iri?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=iotaledger/iri&amp;utm_campaign=Badge_Grade)
-[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/dba5b7ae42024718893991e767390135)](https://www.codacy.com/app/iotaledger/iri?utm_source=github.com&utm_medium=referral&utm_content=iotaledger/iri&utm_campaign=Badge_Coverage)
-![GitHub release](https://img.shields.io/github/release/iotaledger/iri.svg)
 ![license](https://img.shields.io/github/license/iotaledger/iri.svg)
 
-## IOTA
+## KOTA
 
-The IRI repository is the main IOTA Reference Implementation and the embodiment of the IOTA network specification. 
+The KOTA repository is the main [IOTA-iri](https://github.com/iotaledger/iri) Reference Implementation and the embodiment of the IOTA network specification. 
 
 This is a full-featured [[IOTA]](https://iota.org/) node with a convenient JSON-REST HTTP interface.
 It allows users to become part of the [[IOTA]](https://iota.org) network as both a transaction relay

@@ -396,8 +396,8 @@ public class TransactionViewModelTest {
         Transaction transaction = new Transaction();
 
         int[] trits = Arrays.stream(new int[TransactionViewModel.SIGNATURE_MESSAGE_FRAGMENT_TRINARY_SIZE]).map(i -> seed.nextInt(3)-1).toArray();
-        transaction.bytes = Converter.allocateBytesForTrits(trits.length);
-        Converter.bytes(trits, 0, transaction.bytes, 0, trits.length);
+        transaction.setBytes(Converter.allocateBytesForTrits(trits.length));
+        Converter.bytes(trits, 0, transaction.getBytes(), 0, trits.length);
         return transaction;
     }
     public static int[] getRandomTransactionWithTrunkAndBranch(Hash trunk, Hash branch) {

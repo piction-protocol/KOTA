@@ -58,7 +58,7 @@ public class TransactionViewModel {
         if (Hash.NULL_HASH.equals(transactionViewModel.getHash())) {
             return;
         }
-        if(transactionViewModel.getType() == FILLED_SLOT && !transactionViewModel.transaction.parsed) {
+        if(transactionViewModel.getType() == FILLED_SLOT && !transactionViewModel.transaction.getParsed()) {
             tangle.saveBatch(transactionViewModel.getMetadataSaveBatch());
         }
     }
@@ -80,7 +80,7 @@ public class TransactionViewModel {
     }
 
     public TransactionViewModel(final Transaction transaction, final Hash hash) {
-        this.transaction = transaction == null || transaction.bytes == null ? new Transaction(): transaction;
+        this.transaction = transaction == null || transaction.getBytes() == null ? new Transaction(): transaction;
         this.hash = hash == null? Hash.NULL_HASH: hash;
         weightMagnitude = this.hash.trailingZeros();
     }
@@ -89,25 +89,25 @@ public class TransactionViewModel {
         transaction = new com.iota.iri.model.Transaction();
         this.trits = new int[trits.length];
         System.arraycopy(trits, 0, this.trits, 0, trits.length);
-        transaction.bytes = Converter.allocateBytesForTrits(trits.length);
-        Converter.bytes(trits, 0, transaction.bytes, 0, trits.length);
+        transaction.setBytes(Converter.allocateBytesForTrits(trits.length));
+        Converter.bytes(trits, 0, transaction.getBytes(), 0, trits.length);
         this.hash = hash;
 
-        transaction.type = FILLED_SLOT;
+        transaction.setType(FILLED_SLOT);
 
         weightMagnitude = this.hash.trailingZeros();
-        transaction.validity = 0;
-        transaction.arrivalTime = 0;
+        transaction.setValidity(0);
+        transaction.setArrivalTime(0);
     }
 
 
     public TransactionViewModel(final byte[] bytes, Hash hash) throws RuntimeException {
         transaction = new Transaction();
-        transaction.bytes = new byte[SIZE];
-        System.arraycopy(bytes, 0, transaction.bytes, 0, SIZE);
+        transaction.setBytes(new byte[SIZE]);
+        System.arraycopy(bytes, 0, transaction.getBytes(), 0, SIZE);
         this.hash = hash;
         weightMagnitude = this.hash.trailingZeros();
-        transaction.type = FILLED_SLOT;
+        transaction.setType(FILLED_SLOT);
     }
 
     public static int getNumberOfStoredTransactions(Tangle tangle) throws Exception {
@@ -153,7 +153,7 @@ public class TransactionViewModel {
     }
 
     public synchronized int[] trits() {
-        return (trits == null) ? (trits = trits(transaction.bytes)) : trits;
+        return (trits == null) ? (trits = trits(transaction.getBytes())) : trits;
     }
 
     public void delete(Tangle tangle) throws Exception {
@@ -218,25 +218,25 @@ public class TransactionViewModel {
     }
 
     public final int getType() {
-        return transaction.type;
+        return transaction.getType();
     }
 
     public void setArrivalTime(long time) {
-        transaction.arrivalTime = time;
+        transaction.setArrivalTime(time);
     }
 
     public long getArrivalTime() {
-        return transaction.arrivalTime;
+        return transaction.getArrivalTime();
     }
 
     public byte[] getBytes() {
-        if(transaction.bytes == null || transaction.bytes.length != SIZE) {
-            transaction.bytes = new byte[SIZE];
+        if(transaction.getBytes() == null || transaction.getBytes().length != SIZE) {
+            transaction.setBytes(new byte[SIZE]);
             if(trits != null) {
-                Converter.bytes(trits(), 0, transaction.bytes, 0, trits().length);
+                Converter.bytes(trits(), 0, transaction.getBytes(), 0, trits().length);
             }
         }
-        return transaction.bytes;
+        return transaction.getBytes();
     }
 
     public Hash getHash() {
@@ -255,78 +255,78 @@ public class TransactionViewModel {
     }
 
     public Hash getAddressHash() {
-        if(transaction.address == null) {
-            transaction.address = new Hash(trits(), ADDRESS_TRINARY_OFFSET);
+        if(transaction.getAddress() == null) {
+            transaction.setAddress(new Hash(trits(), ADDRESS_TRINARY_OFFSET));
         }
-        return transaction.address;
+        return transaction.getAddress();
     }
 
     public Hash getObsoleteTagValue() {
-        if(transaction.obsoleteTag == null) {
+        if(transaction.getObsoleteTag() == null) {
             byte[] tagBytes = Converter.allocateBytesForTrits(OBSOLETE_TAG_TRINARY_SIZE);
             Converter.bytes(trits(), OBSOLETE_TAG_TRINARY_OFFSET, tagBytes, 0, OBSOLETE_TAG_TRINARY_SIZE);
 
-            transaction.obsoleteTag = new Hash(tagBytes, 0, TAG_SIZE_IN_BYTES);
+            transaction.setObsoleteTag(new Hash(tagBytes, 0, TAG_SIZE_IN_BYTES));
         }
-        return transaction.obsoleteTag;
+        return transaction.getObsoleteTag();
     }
 
     public Hash getBundleHash() {
-        if(transaction.bundle == null) {
-            transaction.bundle = new Hash(trits(), BUNDLE_TRINARY_OFFSET);
+        if(transaction.getBundle() == null) {
+            transaction.setBundle(new Hash(trits(), BUNDLE_TRINARY_OFFSET));
         }
-        return transaction.bundle;
+        return transaction.getBundle();
     }
 
     public Hash getTrunkTransactionHash() {
-        if(transaction.trunk == null) {
-            transaction.trunk = new Hash(trits(), TRUNK_TRANSACTION_TRINARY_OFFSET);
+        if(transaction.getTrunk() == null) {
+            transaction.setTrunk(new Hash(trits(), TRUNK_TRANSACTION_TRINARY_OFFSET));
         }
-        return transaction.trunk;
+        return transaction.getTrunk();
     }
 
     public Hash getBranchTransactionHash() {
-        if(transaction.branch == null) {
-            transaction.branch = new Hash(trits(), BRANCH_TRANSACTION_TRINARY_OFFSET);
+        if(transaction.getBranch() == null) {
+            transaction.setBranch(new Hash(trits(), BRANCH_TRANSACTION_TRINARY_OFFSET));
         }
-        return transaction.branch;
+        return transaction.getBranch();
     }
 
     public Hash getTagValue() {
-        if(transaction.tag == null) {
+        if(transaction.getTag() == null) {
             byte[] tagBytes = Converter.allocateBytesForTrits(TAG_TRINARY_SIZE);
             Converter.bytes(trits(), TAG_TRINARY_OFFSET, tagBytes, 0, TAG_TRINARY_SIZE);
-            transaction.tag = new Hash(tagBytes, 0, TAG_SIZE_IN_BYTES);
+            transaction.setTag(new Hash(tagBytes, 0, TAG_SIZE_IN_BYTES));
         }
-        return transaction.tag;
+        return transaction.getTag();
     }
 
-    public long getAttachmentTimestamp() { return transaction.attachmentTimestamp; }
+    public long getAttachmentTimestamp() { return transaction.getAttachmentTimestamp(); }
     public long getAttachmentTimestampLowerBound() {
-        return transaction.attachmentTimestampLowerBound;
+        return transaction.getAttachmentTimestampLowerBound();
     }
     public long getAttachmentTimestampUpperBound() {
-        return transaction.attachmentTimestampUpperBound;
+        return transaction.getAttachmentTimestampUpperBound();
     }
 
 
     public long value() {
-        return transaction.value;
+        return transaction.getValue();
     }
 
     public void setValidity(Tangle tangle, int validity) throws Exception {
-        if(transaction.validity != validity) {
-            transaction.validity = validity;
+        if(transaction.getValidity() != validity) {
+            transaction.setValidity(validity);
             update(tangle, "validity");
         }
     }
 
     public int getValidity() {
-        return transaction.validity;
+        return transaction.getValidity();
     }
 
     public long getCurrentIndex() {
-        return transaction.currentIndex;
+        return transaction.getCurrentIndex();
     }
 
     public int[] getSignature() {
@@ -334,7 +334,7 @@ public class TransactionViewModel {
     }
 
     public long getTimestamp() {
-        return transaction.timestamp;
+        return transaction.getTimestamp();
     }
 
     public byte[] getNonce() {
@@ -344,23 +344,23 @@ public class TransactionViewModel {
     }
 
     public long lastIndex() {
-        return transaction.lastIndex;
+        return transaction.getLastIndex();
     }
 
     public void setAttachmentData() {
         getTagValue();
-        transaction.attachmentTimestamp = Converter.longValue(trits(), ATTACHMENT_TIMESTAMP_TRINARY_OFFSET, ATTACHMENT_TIMESTAMP_TRINARY_SIZE);
-        transaction.attachmentTimestampLowerBound = Converter.longValue(trits(), ATTACHMENT_TIMESTAMP_LOWER_BOUND_TRINARY_OFFSET, ATTACHMENT_TIMESTAMP_LOWER_BOUND_TRINARY_SIZE);
-        transaction.attachmentTimestampUpperBound = Converter.longValue(trits(), ATTACHMENT_TIMESTAMP_UPPER_BOUND_TRINARY_OFFSET, ATTACHMENT_TIMESTAMP_UPPER_BOUND_TRINARY_SIZE);
+        transaction.setAttachmentTimestamp(Converter.longValue(trits(), ATTACHMENT_TIMESTAMP_TRINARY_OFFSET, ATTACHMENT_TIMESTAMP_TRINARY_SIZE));
+        transaction.setAttachmentTimestampLowerBound(Converter.longValue(trits(), ATTACHMENT_TIMESTAMP_LOWER_BOUND_TRINARY_OFFSET, ATTACHMENT_TIMESTAMP_LOWER_BOUND_TRINARY_SIZE));
+        transaction.setAttachmentTimestampUpperBound(Converter.longValue(trits(), ATTACHMENT_TIMESTAMP_UPPER_BOUND_TRINARY_OFFSET, ATTACHMENT_TIMESTAMP_UPPER_BOUND_TRINARY_SIZE));
 
     }
     public void setMetadata() {
-        transaction.value = Converter.longValue(trits(), VALUE_TRINARY_OFFSET, VALUE_USABLE_TRINARY_SIZE);
-        transaction.timestamp = Converter.longValue(trits(), TIMESTAMP_TRINARY_OFFSET, TIMESTAMP_TRINARY_SIZE);
+        transaction.setValue(Converter.longValue(trits(), VALUE_TRINARY_OFFSET, VALUE_USABLE_TRINARY_SIZE));
+        transaction.setTimestamp(Converter.longValue(trits(), TIMESTAMP_TRINARY_OFFSET, TIMESTAMP_TRINARY_SIZE));
         //if (transaction.timestamp > 1262304000000L ) transaction.timestamp /= 1000L;  // if > 01.01.2010 in milliseconds
-        transaction.currentIndex = Converter.longValue(trits(), CURRENT_INDEX_TRINARY_OFFSET, CURRENT_INDEX_TRINARY_SIZE);
-        transaction.lastIndex = Converter.longValue(trits(), LAST_INDEX_TRINARY_OFFSET, LAST_INDEX_TRINARY_SIZE);
-        transaction.type = transaction.bytes == null ? TransactionViewModel.PREFILLED_SLOT : TransactionViewModel.FILLED_SLOT;
+        transaction.setCurrentIndex(Converter.longValue(trits(), CURRENT_INDEX_TRINARY_OFFSET, CURRENT_INDEX_TRINARY_SIZE));
+        transaction.setLastIndex(Converter.longValue(trits(), LAST_INDEX_TRINARY_OFFSET, LAST_INDEX_TRINARY_SIZE));
+        transaction.setType(transaction.getBytes() == null ? TransactionViewModel.PREFILLED_SLOT : TransactionViewModel.FILLED_SLOT);
     }
 
     public static boolean exists(Tangle tangle, Hash hash) throws Exception {
@@ -387,34 +387,34 @@ public class TransactionViewModel {
     }
 
     public boolean updateSolid(boolean solid) throws Exception {
-        if(solid != transaction.solid) {
-            transaction.solid = solid;
+        if(solid != transaction.getSolid()) {
+            transaction.setSolid(solid);
             return true;
         }
         return false;
     }
 
     public boolean isSolid() {
-        return transaction.solid;
+        return transaction.getSolid();
     }
 
     public int snapshotIndex() {
-        return transaction.snapshot;
+        return transaction.getSnapshot();
     }
 
     public void setSnapshot(Tangle tangle, final int index) throws Exception {
-        if ( index != transaction.snapshot ) {
-            transaction.snapshot = index;
+        if ( index != transaction.getSnapshot()) {
+            transaction.setSnapshot(index);
             update(tangle, "snapshot");
         }
     }
 
     public long getHeight() {
-        return transaction.height;
+        return transaction.getHeight();
     }
 
     private void updateHeight(long height) throws Exception {
-        transaction.height = height;
+        transaction.setHeight(height);
     }
 
     public void updateHeights(Tangle tangle) throws Exception {
@@ -449,9 +449,9 @@ public class TransactionViewModel {
     }
 
     public void updateSender(String sender) throws Exception {
-        transaction.sender = sender;
+        transaction.setSender(sender);
     }
     public String getSender() {
-        return transaction.sender;
+        return transaction.getSender();
     }
 }

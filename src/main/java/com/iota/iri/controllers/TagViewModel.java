@@ -23,7 +23,7 @@ public class TagViewModel implements HashesViewModel {
     }
 
     private TagViewModel(Tag hashes, Indexable hash) {
-        self = hashes == null || hashes.set == null ? new Tag(): hashes;
+        self = hashes == null || hashes.getSet() == null ? new Tag(): hashes;
         this.hash = hash;
     }
 
@@ -41,7 +41,7 @@ public class TagViewModel implements HashesViewModel {
 
     public static Map.Entry<Indexable, Persistable> getEntry(Hash hash, Hash hashToMerge) throws Exception {
         Tag hashes = new Tag();
-        hashes.set.add(hashToMerge);
+        hashes.getSet().add(hashToMerge);
         return new HashMap.SimpleEntry<>(hash, hashes);
     }
 
@@ -50,7 +50,7 @@ public class TagViewModel implements HashesViewModel {
     }
 
     public int size() {
-        return self.set.size();
+        return self.getSet().size();
     }
 
     public boolean addHash(Hash theHash) {
@@ -62,7 +62,7 @@ public class TagViewModel implements HashesViewModel {
     }
 
     public Set<Hash> getHashes() {
-        return self.set;
+        return self.getSet();
     }
     @Override
     public void delete(Tangle tangle) throws Exception {

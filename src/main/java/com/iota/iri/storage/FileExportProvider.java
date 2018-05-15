@@ -60,9 +60,9 @@ public class FileExportProvider implements PersistenceProvider {
                 try(PrintWriter writer = new PrintWriter(path.toString(), "UTF-8")) {
                     writer.println(index.toString());
                     writer.println(Converter.trytes(trits(transaction)));
-                    writer.println(transaction.sender);
+                    writer.println(transaction.getSender());
                     if(item.equals("height")) {
-                        writer.println("Height: " + String.valueOf(transaction.height));
+                        writer.println("Height: " + String.valueOf(transaction.getHeight()));
                     } else {
                         writer.println("Height: ");
                     }
@@ -169,8 +169,8 @@ public class FileExportProvider implements PersistenceProvider {
     }
     int[] trits(Transaction transaction) {
         int[] trits = new int[TRINARY_SIZE];
-        if(transaction.bytes != null) {
-            Converter.getTrits(transaction.bytes, trits);
+        if(transaction.getBytes() != null) {
+            Converter.getTrits(transaction.getBytes(), trits);
         }
         return trits;
     }

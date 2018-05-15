@@ -24,7 +24,7 @@ public class AddressViewModel implements HashesViewModel {
     }
 
     private AddressViewModel(Address hashes, Indexable hash) {
-        self = hashes == null || hashes.set == null ? new Address(): hashes;
+        self = hashes == null || hashes.getSet() == null ? new Address(): hashes;
         this.hash = hash;
     }
 
@@ -37,7 +37,7 @@ public class AddressViewModel implements HashesViewModel {
     }
 
     public int size() {
-        return self.set.size();
+        return self.getSet().size();
     }
 
     public boolean addHash(Hash theHash) {
@@ -49,7 +49,7 @@ public class AddressViewModel implements HashesViewModel {
     }
 
     public Set<Hash> getHashes() {
-        return self.set;
+        return self.getSet();
     }
     @Override
     public void delete(Tangle tangle) throws Exception {

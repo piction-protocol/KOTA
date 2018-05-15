@@ -24,7 +24,7 @@ public class ApproveeViewModel implements HashesViewModel {
     }
 
     private ApproveeViewModel(Approvee hashes, Indexable hash) {
-        self = hashes == null || hashes.set == null ? new Approvee(): hashes;
+        self = hashes == null || hashes.getSet() == null ? new Approvee(): hashes;
         this.hash = hash;
     }
 
@@ -34,7 +34,7 @@ public class ApproveeViewModel implements HashesViewModel {
 
     public static Map.Entry<Indexable, Persistable> getEntry(Hash hash, Hash hashToMerge) throws Exception {
         Approvee hashes = new Approvee();
-        hashes.set.add(hashToMerge);
+        hashes.getSet().add(hashToMerge);
         return new HashMap.SimpleEntry<>(hash, hashes);
     }
 
@@ -43,7 +43,7 @@ public class ApproveeViewModel implements HashesViewModel {
     }
 
     public int size() {
-        return self.set.size();
+        return self.getSet().size();
     }
 
     public boolean addHash(Hash theHash) {
@@ -55,7 +55,7 @@ public class ApproveeViewModel implements HashesViewModel {
     }
 
     public Set<Hash> getHashes() {
-        return self.set;
+        return self.getSet();
     }
     @Override
     public void delete(Tangle tangle) throws Exception {

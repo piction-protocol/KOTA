@@ -24,7 +24,7 @@ public class BundleViewModel implements HashesViewModel {
     }
 
     private BundleViewModel(Bundle hashes, Indexable hash) {
-        self = hashes == null || hashes.set == null ? new Bundle(): hashes;
+        self = hashes == null || hashes.getSet() == null ? new Bundle(): hashes;
         this.hash = hash;
     }
 
@@ -34,7 +34,7 @@ public class BundleViewModel implements HashesViewModel {
 
     public static Map.Entry<Indexable, Persistable> getEntry(Hash hash, Hash hashToMerge) throws Exception {
         Bundle hashes = new Bundle();
-        hashes.set.add(hashToMerge);
+        hashes.getSet().add(hashToMerge);
         return new HashMap.SimpleEntry<>(hash, hashes);
     }
 
@@ -51,7 +51,7 @@ public class BundleViewModel implements HashesViewModel {
     }
 
     public int size() {
-        return self.set.size();
+        return self.getSet().size();
     }
 
     public boolean addHash(Hash theHash) {
@@ -63,7 +63,7 @@ public class BundleViewModel implements HashesViewModel {
     }
 
     public Set<Hash> getHashes() {
-        return self.set;
+        return self.getSet();
     }
 
     @Override

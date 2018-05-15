@@ -28,8 +28,8 @@ public class MilestoneViewModel {
 
     public MilestoneViewModel(final int index, final Hash milestoneHash) {
         this.milestone = new Milestone();
-        this.milestone.index = new IntegerIndex(index);
-        milestone.hash = milestoneHash;
+        this.milestone.setIndex(new IntegerIndex(index));
+        milestone.setHash(milestoneHash);
     }
 
     public static MilestoneViewModel get(Tangle tangle, int index) throws Exception {
@@ -42,7 +42,7 @@ public class MilestoneViewModel {
 
     public static boolean load(Tangle tangle, int index) throws Exception {
         Milestone milestone = (Milestone) tangle.load(Milestone.class, new IntegerIndex(index));
-        if(milestone != null && milestone.hash != null) {
+        if(milestone != null && milestone.getHash() != null) {
             milestones.put(index, new MilestoneViewModel(milestone));
             return true;
         }
@@ -68,7 +68,7 @@ public class MilestoneViewModel {
     }
 
     public MilestoneViewModel previous(Tangle tangle) throws Exception {
-        Pair<Indexable, Persistable> milestonePair = tangle.previous(Milestone.class, this.milestone.index);
+        Pair<Indexable, Persistable> milestonePair = tangle.previous(Milestone.class, this.milestone.getIndex());
         if(milestonePair != null && milestonePair.hi != null) {
             Milestone milestone = (Milestone) milestonePair.hi;
             return new MilestoneViewModel((Milestone) milestone);
@@ -77,7 +77,7 @@ public class MilestoneViewModel {
     }
 
     public MilestoneViewModel next(Tangle tangle) throws Exception {
-        Pair<Indexable, Persistable> milestonePair = tangle.next(Milestone.class, this.milestone.index);
+        Pair<Indexable, Persistable> milestonePair = tangle.next(Milestone.class, this.milestone.getIndex());
         if(milestonePair != null && milestonePair.hi != null) {
             Milestone milestone = (Milestone) milestonePair.hi;
             return new MilestoneViewModel((Milestone) milestone);
@@ -106,18 +106,18 @@ public class MilestoneViewModel {
     }
 
     public boolean store(Tangle tangle) throws Exception {
-        return tangle.save(milestone, milestone.index);
+        return tangle.save(milestone, milestone.getIndex());
     }
 
     public Hash getHash() {
-        return milestone.hash;
+        return milestone.getHash();
     }
     public Integer index() {
-        return milestone.index.getValue();
+        return milestone.getIndex().getValue();
     }
 
     public void delete(Tangle tangle) throws Exception {
-        tangle.delete(Milestone.class, milestone.index);
+        tangle.delete(Milestone.class, milestone.getIndex());
     }
 
 }

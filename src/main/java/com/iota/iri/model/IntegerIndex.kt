@@ -25,8 +25,8 @@ class IntegerIndex(var value: Int) : Indexable {
         return IntegerIndex(value - 1)
     }
 
-    override fun compareTo(o: Indexable): Int {
-        val i = IntegerIndex(Serializer.getInteger(o.bytes()))
-        return value - (o as IntegerIndex).value
+    override fun compareTo(index: Indexable): Int {
+        IntegerIndex(Serializer.getInteger(index.bytes()))
+        return value - (index as IntegerIndex).value
     }
 }

@@ -98,7 +98,7 @@ public class Milestone {
 
                 try {
                     final int previousLatestMilestoneIndex = latestMilestoneIndex;
-                    Set<Hash> hashes = AddressViewModel.load(tangle, coordinator).getHashes();
+                    Set<Hash> hashes = AddressViewModel.Companion.load(tangle, coordinator).getHashes();
                     { // Update Milestone
                         { // find new milestones
                             for(Hash hash: hashes) {

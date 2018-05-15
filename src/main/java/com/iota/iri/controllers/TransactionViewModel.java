@@ -212,7 +212,7 @@ public class TransactionViewModel {
 
     public ApproveeViewModel getApprovers(Tangle tangle) throws Exception {
         if(approovers == null) {
-            approovers = ApproveeViewModel.load(tangle, hash);
+            approovers = ApproveeViewModel.Companion.load(tangle, hash);
         }
         return approovers;
     }
@@ -245,7 +245,7 @@ public class TransactionViewModel {
 
     public AddressViewModel getAddress(Tangle tangle) throws Exception {
         if(address == null) {
-            address = AddressViewModel.load(tangle, getAddressHash());
+            address = AddressViewModel.Companion.load(tangle, getAddressHash());
         }
         return address;
     }

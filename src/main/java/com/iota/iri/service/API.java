@@ -390,7 +390,7 @@ public class API {
         if (previousEpochsSpentAddresses.containsKey(address)) {
             return true;
         }
-        Set<Hash> hashes = AddressViewModel.load(instance.tangle, address).getHashes();
+        Set<Hash> hashes = AddressViewModel.Companion.load(instance.tangle, address).getHashes();
         for (Hash hash : hashes) {
             final TransactionViewModel tx = TransactionViewModel.fromHash(instance.tangle, hash);
             //spend
@@ -783,7 +783,7 @@ public class API {
         if (request.containsKey("addresses")) {
             final HashSet<String> addresses = getParameterAsSet(request,"addresses",HASH_SIZE);
             for (final String address : addresses) {
-                addressesTransactions.addAll(AddressViewModel.load(instance.tangle, new Hash(address)).getHashes());
+                addressesTransactions.addAll(AddressViewModel.Companion.load(instance.tangle, new Hash(address)).getHashes());
             }
             foundTransactions.addAll(addressesTransactions);
             containsKey = true;

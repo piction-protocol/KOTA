@@ -15,7 +15,7 @@ Running an IRI node also allows light wallet users a node to directly connect to
 * **Latest release:** 1.4.2.4 Release
 * **License:** GPLv3
 
-## Articles
+# Articles
 - [steemit 0](https://steemit.com/kr/@kilu83/iota)
 - [steemit 1](https://steemit.com/kr/@jruit/iota)
 
@@ -33,24 +33,13 @@ You can **find neighbors** quickly at both our [[Discord Community]](https://dis
 Everyone will be welcoming and very happy to help you get connected.
 If you want to get tokens for your testcase, please just ask in one of the communication channels.
 
-## Reporting Issues
-
-If you notice any bugs, problems or other irregularities with this release,
-please submit an issue on github [[submit new issue]](https://github.com/iotaledger/iri/issues/new).
-
-# Installing
-
-The preferred option is that you compile yourself.
-The second option is that you utilize the provided jar, 
-which is released whenever there is a new update here: [Github Releases](https://github.com/iotaledger/iri/releases).
-
 ### Compiling yourself  
 
 Make sure to have Maven and Java 8 installed on your computer.
 
 #### To compile & package
 ```
-$ git clone https://github.com/iotaledger/iri
+$ git clone https://github.com/piction-network/KOTA.git
 $ cd iri
 $ mvn clean compile
 $ mvn package
@@ -76,14 +65,6 @@ Here is an example script that specifies only the port, with all other setting t
 ```
 java -jar iri.jar -p 14265
 ```
-
-### Docker
-
-Create an iota.ini file with all of your configuration variables set in it.
-Any that you don't provide in here will be assumed to be default or taken from
-command line arguments.
-
-`docker run -d --net=host --name iota-node -v iota.ini:/iri/iota.ini iotaledger/iri:latest`
 
 ### Command Line Options 
 

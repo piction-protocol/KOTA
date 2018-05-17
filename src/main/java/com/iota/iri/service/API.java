@@ -306,7 +306,7 @@ public class API {
                         if(tips == null) {
                             return ErrorResponse.Companion.create("The subtangle is not solid");
                         }
-                        return GetTransactionsToApproveResponse.create(tips[0], tips[1]);
+                        return GetTransactionsToApproveResponse.Companion.create(tips[0], tips[1]);
                     } catch (RuntimeException e) {
                         log.info("Tip selection failed: " + e.getLocalizedMessage());
                         return ErrorResponse.Companion.create(e.getLocalizedMessage());
@@ -343,7 +343,7 @@ public class API {
                         List<String> missingTx = Arrays.stream(instance.transactionRequester.getRequestedTransactions())
                                 .map(Hash::toString)
                                 .collect(Collectors.toList());
-                        return GetTipsResponse.create(missingTx);
+                        return GetTipsResponse.Companion.create(missingTx);
                     }
                 }
                 case "checkConsistency": {
@@ -383,7 +383,7 @@ public class API {
         for (Hash address : addresses) {
             states[index++] = wasAddressSpentFrom(address);
         }
-        return wereAddressesSpentFrom.create(states);
+        return wereAddressesSpentFrom.Companion.create(states);
     }
 
     private boolean wasAddressSpentFrom(Hash address) throws Exception {
@@ -554,7 +554,7 @@ public class API {
         } catch (URISyntaxException|RuntimeException e) {
             return ErrorResponse.Companion.create("Invalid uri scheme: " + e.getLocalizedMessage());
         }
-        return RemoveNeighborsResponse.create(numberOfRemovedNeighbors);
+        return RemoveNeighborsResponse.Companion.create(numberOfRemovedNeighbors);
     }
 
     private synchronized AbstractResponse getTrytesStatement(List<String> hashes) throws Exception {
@@ -568,7 +568,7 @@ public class API {
         if (elements.size() > maxGetTrytes){
             return ErrorResponse.Companion.create(overMaxErrorMessage);
         }
-        return GetTrytesResponse.create(elements);
+        return GetTrytesResponse.Companion.create(elements);
     }
 
     private static int counter_getTxToApprove = 0;
@@ -641,7 +641,7 @@ public class API {
     }
 
     private synchronized AbstractResponse getTipsStatement() throws Exception {
-        return GetTipsResponse.create(instance.tipsViewModel.getTips().stream().map(Hash::toString).collect(Collectors.toList()));
+        return GetTipsResponse.Companion.create(instance.tipsViewModel.getTips().stream().map(Hash::toString).collect(Collectors.toList()));
     }
 
     public void storeTransactionStatement(final List<String> trys) throws Exception {

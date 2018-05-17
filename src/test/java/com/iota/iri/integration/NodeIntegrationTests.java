@@ -55,11 +55,11 @@ public class NodeIntegrationTests {
             folders[i*2 + 1] = new TemporaryFolder();
             iotaNodes[i] = newNode(i, folders[i*2], folders[i*2+1]);
             ixi[i] = new IXI(iotaNodes[i]);
-            ixi[i].init(iotaNodes[i].configuration.string(Configuration.DefaultConfSettings.IXI_DIR));
+            ixi[i].init(iotaNodes[i].getConfiguration().string(Configuration.DefaultConfSettings.IXI_DIR));
             api[i] = new API(iotaNodes[i], ixi[i]);
             api[i].init();
         }
-        Node.Companion.uri("udp://localhost:14701").ifPresent(uri -> iotaNodes[0].node.addNeighbor(iotaNodes[0].node.newNeighbor(uri, true)));
+        Node.Companion.uri("udp://localhost:14701").ifPresent(uri -> iotaNodes[0].getNode().addNeighbor(iotaNodes[0].getNode().newNeighbor(uri, true)));
         //Node.uri("udp://localhost:14700").ifPresent(uri -> iotaNodes[1].node.addNeighbor(iotaNodes[1].node.newNeighbor(uri, true)));
 
         cooThread = new Thread(spawnCoordinator(api[0], spacing), "Coordinator");

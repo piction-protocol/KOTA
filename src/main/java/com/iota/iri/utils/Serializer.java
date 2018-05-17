@@ -1,7 +1,5 @@
 package com.iota.iri.utils;
 
-import java.nio.ByteBuffer;
-
 /**
  * Created by paul on 3/13/17 for iri-testnet.
  */
@@ -14,7 +12,7 @@ public class Serializer {
         }
         return result;
     }
-    
+
     public static byte[] serialize(int integer) {
     	byte[] result = new byte[Integer.BYTES];
         for (int i = Integer.BYTES - 1; i >= 0; i--) {
@@ -23,7 +21,7 @@ public class Serializer {
         }
         return result;
     }
-    
+
     public static long getLong(byte[] bytes) {
         return getLong(bytes, 0);
     }

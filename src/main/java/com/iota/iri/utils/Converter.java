@@ -164,32 +164,32 @@ public class Converter {
     }
 
     public static void shiftPair(Pair<long[], long[]> source, Pair<long[], long[]> dest) {
-        if(source.low.length == dest.low.length && source.high.length == dest.high.length) {
-            for(int i = 0; i < dest.low.length; i++) {
-                dest.low[i] <<= 1;
-                dest.low[i] |= source.low[i] & 1;
+        if(source.getLow().length == dest.getLow().length && source.getHigh().length == dest.getHigh().length) {
+            for(int i = 0; i < dest.getLow().length; i++) {
+                dest.getLow()[i] <<= 1;
+                dest.getLow()[i] |= source.getLow()[i] & 1;
             }
-            for(int i = 0; i < dest.high.length; i++) {
-                dest.high[i] <<= 1;
-                dest.high[i] |= source.high[i] & 1;
+            for(int i = 0; i < dest.getHigh().length; i++) {
+                dest.getHigh()[i] <<= 1;
+                dest.getHigh()[i] |= source.getHigh()[i] & 1;
             }
         }
     }
 
     public static int[] trits(final Pair<long[], long[]> pair, final int bitIndex) {
         final int length;
-        if(pair.low.length == pair.high.length || pair.low.length < pair.high.length) {
-            length = pair.low.length;
+        if(pair.getLow().length == pair.getHigh().length || pair.getLow().length < pair.getHigh().length) {
+            length = pair.getLow().length;
         } else {
-            length = pair.high.length;
+            length = pair.getHigh().length;
         }
         final int[] trits = new int[length];
         long low;
         long hi;
         int mask = 1 << bitIndex;
         for(int i = 0; i < length; i++) {
-            low = pair.low[i] & mask;
-            hi = pair.high[i] & mask;
+            low = pair.getLow()[i] & mask;
+            hi = pair.getHigh()[i] & mask;
             if( hi == low ) {
                 trits[i] = 0;
             } else if ( low == 0 ) {

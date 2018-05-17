@@ -39,7 +39,7 @@ public class CurlTest {
         curl = new Curl(true, SpongeFactory.Mode.CURLP81);
         curl.absorb(Converter.longPair(in_trits), 0, in_trits.length);
         curl.squeeze(hashPair, 0, Curl.HASH_LENGTH);
-        int[] hash_trits = Converter.trits(hashPair.low, hashPair.high);
+        int[] hash_trits = Converter.trits(hashPair.getLow(), hashPair.getHigh());
         String out_trytes = Converter.trytes(hash_trits);
         Assert.assertEquals(hash, out_trytes);
     }
@@ -78,7 +78,7 @@ public class CurlTest {
         curl.absorb(in_pair, 0, in_trits.length);
         curl.squeeze(hashPair, 0, Curl.HASH_LENGTH);
         diff2 = System.nanoTime() - start2;
-        System.arraycopy(Converter.trits(hashPair.low, hashPair.high), 0, hash_trits, 0, Curl.HASH_LENGTH);
+        System.arraycopy(Converter.trits(hashPair.getLow(), hashPair.getHigh()), 0, hash_trits, 0, Curl.HASH_LENGTH);
         String out_trytes = Converter.trytes(hash_trits);
         Assert.assertEquals(hash, out_trytes);
         System.out.println(diff1);

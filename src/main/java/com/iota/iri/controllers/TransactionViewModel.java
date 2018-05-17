@@ -184,16 +184,16 @@ public class TransactionViewModel {
 
     public static TransactionViewModel first(Tangle tangle) throws Exception {
         Pair<Indexable, Persistable> transactionPair = tangle.getFirst(Transaction.class, Hash.class);
-        if(transactionPair != null && transactionPair.high != null) {
-            return new TransactionViewModel((Transaction) transactionPair.high, (Hash) transactionPair.low);
+        if(transactionPair != null && transactionPair.getHigh() != null) {
+            return new TransactionViewModel((Transaction) transactionPair.getHigh(), (Hash) transactionPair.getLow());
         }
         return null;
     }
 
     public TransactionViewModel next(Tangle tangle) throws Exception {
         Pair<Indexable, Persistable> transactionPair = tangle.next(Transaction.class, hash);
-        if(transactionPair != null && transactionPair.high != null) {
-            return new TransactionViewModel((Transaction) transactionPair.high, (Hash) transactionPair.low);
+        if(transactionPair != null && transactionPair.getHigh() != null) {
+            return new TransactionViewModel((Transaction) transactionPair.getHigh(), (Hash) transactionPair.getLow());
         }
         return null;
     }

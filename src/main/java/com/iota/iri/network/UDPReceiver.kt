@@ -37,7 +37,7 @@ class UDPReceiver(private val port: Int, private val node: Node, private val pac
     @Throws(Exception::class)
     fun init() {
         socket = DatagramSocket(port)
-        node.setUDPSocket(socket)
+        node.udpSocket = socket
         log.info("UDP replicator is accepting connections on udp port " + port)
 
         receivingThread = Thread(spawnReceiverThread(), "UDP receiving thread")

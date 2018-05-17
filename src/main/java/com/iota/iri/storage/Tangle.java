@@ -1,13 +1,12 @@
 package com.iota.iri.storage;
 
-import com.iota.iri.model.Hash;
-import com.iota.iri.model.Hashes;
 import com.iota.iri.utils.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by paul on 3/3/17 for iri.
@@ -26,7 +25,6 @@ public class Tangle {
             provider.init();
         }
     }
-
 
     public void shutdown() throws Exception {
         log.info("Shutting down Tangle Persistence Providers... ");

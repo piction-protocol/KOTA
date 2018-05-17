@@ -277,8 +277,8 @@ public class API {
                     String name = instance.getConfiguration().booling(Configuration.DefaultConfSettings.TESTNET) ? IRI.INSTANCE.getTESTNET_NAME() : IRI.INSTANCE.getMAINNET_NAME();
                     return GetNodeInfoResponse.Companion.create(name, IRI.INSTANCE.getVERSION(), Runtime.getRuntime().availableProcessors(),
                             Runtime.getRuntime().freeMemory(), System.getProperty("java.version"), Runtime.getRuntime().maxMemory(),
-                            Runtime.getRuntime().totalMemory(), instance.getMilestone().latestMilestone, instance.getMilestone().latestMilestoneIndex,
-                            instance.getMilestone().latestSolidSubtangleMilestone, instance.getMilestone().latestSolidSubtangleMilestoneIndex, instance.getMilestone().milestoneStartIndex,
+                            Runtime.getRuntime().totalMemory(), instance.getMilestone().getLatestMilestone(), instance.getMilestone().getLatestMilestoneIndex(),
+                            instance.getMilestone().getLatestSolidSubtangleMilestone(), instance.getMilestone().getLatestSolidSubtangleMilestoneIndex(), instance.getMilestone().getMilestoneStartIndex(),
                             instance.getNode().howManyNeighbors(), instance.getNode().queuedTransactionsSize(),
                             System.currentTimeMillis(), instance.getTipsViewModel().size(),
                             instance.getTransactionRequester().numberOfTransactionsToRequest());
@@ -463,7 +463,7 @@ public class API {
         }
 
         if (state) {
-            instance.getMilestone().latestSnapshot.rwlock.readLock().lock();
+            instance.getMilestone().getLatestSnapshot().rwlock.readLock().lock();
             try {
 
                 if (!instance.getLedgerValidator().checkConsistency(transactions)) {
@@ -471,7 +471,7 @@ public class API {
                     info = "tails are not consistent (would lead to inconsistent ledger state)";
                 }
             } finally {
-                instance.getMilestone().latestSnapshot.rwlock.readLock().unlock();
+                instance.getMilestone().getLatestSnapshot().rwlock.readLock().unlock();
             }
         }
 
@@ -539,7 +539,7 @@ public class API {
     }
 
     public boolean invalidSubtangleStatus() {
-        return (instance.getMilestone().latestSolidSubtangleMilestoneIndex == milestoneStartIndex);
+        return (instance.getMilestone().getLatestSolidSubtangleMilestoneIndex() == milestoneStartIndex);
     }
 
     private AbstractResponse removeNeighborsStatement(List<String> uris) {
@@ -604,13 +604,13 @@ public class API {
             } else {
                 TransactionViewModel transactionViewModel = TransactionViewModel.fromHash(instance.getTangle(), referenceHash);
                 if (transactionViewModel.snapshotIndex() != 0
-                        && transactionViewModel.snapshotIndex() < instance.getMilestone().latestSolidSubtangleMilestoneIndex - depth) {
+                        && transactionViewModel.snapshotIndex() < instance.getMilestone().getLatestSolidSubtangleMilestoneIndex() - depth) {
                     throw new RuntimeException(REFERENCE_TRANSACTION_TOO_OLD);
                 }
             }
         }
 
-        instance.getMilestone().latestSnapshot.rwlock.readLock().lock();
+        instance.getMilestone().getLatestSnapshot().rwlock.readLock().lock();
         try {
             Set<Hash> visitedHashes = new HashSet<>();
             Map<Hash, Long> diff = new HashMap<>();
@@ -635,7 +635,7 @@ public class API {
                 return tips;
             }
         } finally {
-            instance.getMilestone().latestSnapshot.rwlock.readLock().unlock();
+            instance.getMilestone().getLatestSnapshot().rwlock.readLock().unlock();
         }
         throw new RuntimeException("inconsistent tips pair selected");
     }
@@ -890,17 +890,17 @@ public class API {
                 .collect(Collectors.toCollection(LinkedList::new));
         final List<Hash> hashes;
         final Map<Hash, Long> balances = new HashMap<>();
-        instance.getMilestone().latestSnapshot.rwlock.readLock().lock();
-        final int index = instance.getMilestone().latestSnapshot.index();
+        instance.getMilestone().getLatestSnapshot().rwlock.readLock().lock();
+        final int index = instance.getMilestone().getLatestSnapshot().index();
         if (tips == null || tips.size() == 0) {
-            hashes = Collections.singletonList(instance.getMilestone().latestSolidSubtangleMilestone);
+            hashes = Collections.singletonList(instance.getMilestone().getLatestSolidSubtangleMilestone());
         } else {
             hashes = tips.stream().map(address -> (new Hash(address)))
                     .collect(Collectors.toCollection(LinkedList::new));
         }
         try {
             for (final Hash address : addresses) {
-                Long value = instance.getMilestone().latestSnapshot.getBalance(address);
+                Long value = instance.getMilestone().getLatestSnapshot().getBalance(address);
                 if (value == null) {
                     value = 0L;
                 }
@@ -922,7 +922,7 @@ public class API {
             }
             diff.forEach((key, value) -> balances.computeIfPresent(key, (hash, aLong) -> value + aLong));
         } finally {
-            instance.getMilestone().latestSnapshot.rwlock.readLock().unlock();
+            instance.getMilestone().getLatestSnapshot().rwlock.readLock().unlock();
         }
 
         final List<String> elements = addresses.stream().map(address -> balances.get(address).toString())

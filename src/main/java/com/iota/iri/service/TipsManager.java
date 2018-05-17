@@ -116,8 +116,8 @@ public class TipsManager {
             depth = maxDepth;
         }
 
-        if (milestone.latestSolidSubtangleMilestoneIndex > milestoneStartIndex ||
-                milestone.latestMilestoneIndex == milestoneStartIndex) {
+        if (milestone.getLatestSolidSubtangleMilestoneIndex() > milestoneStartIndex ||
+                milestone.getLatestMilestoneIndex() == milestoneStartIndex) {
 
             Map<Hash, Long> ratings = new HashMap<>();
             Set<Hash> analyzedTips = new HashSet<>();
@@ -127,7 +127,7 @@ public class TipsManager {
                 serialUpdateRatings(visitedHashes, tip, ratings, analyzedTips, extraTip);
                 analyzedTips.clear();
                 if (ledgerValidator.updateDiff(visitedHashes, diff, tip)) {
-                    return markovChainMonteCarlo(visitedHashes, diff, tip, extraTip, ratings, iterations, milestone.latestSolidSubtangleMilestoneIndex - depth * 2, maxDepthOk, seed);
+                    return markovChainMonteCarlo(visitedHashes, diff, tip, extraTip, ratings, iterations, milestone.getLatestSolidSubtangleMilestoneIndex() - depth * 2, maxDepthOk, seed);
                 }
                 else {
                     throw new RuntimeException("starting tip failed consistency check: " + tip.toString());
@@ -147,18 +147,18 @@ public class TipsManager {
 
         if (extraTip == null) {
             //trunk
-            return reference != null ? reference : milestone.latestSolidSubtangleMilestone;
+            return reference != null ? reference : milestone.getLatestSolidSubtangleMilestone();
         }
 
         //branch (extraTip)
-        int milestoneIndex = Math.max(milestone.latestSolidSubtangleMilestoneIndex - depth - 1, 0);
+        int milestoneIndex = Math.max(milestone.getLatestSolidSubtangleMilestoneIndex() - depth - 1, 0);
         MilestoneViewModel milestoneViewModel =
                 MilestoneViewModel.Companion.findClosestNextMilestone(tangle, milestoneIndex, testnet, milestoneStartIndex);
         if (milestoneViewModel != null && milestoneViewModel.getHash() != null) {
             return milestoneViewModel.getHash();
         }
 
-        return milestone.latestSolidSubtangleMilestone;
+        return milestone.getLatestSolidSubtangleMilestone();
     }
 
     Hash markovChainMonteCarlo(final Set<Hash> visitedHashes, final Map<Hash, Long> diff, final Hash tip, final Hash extraTip, final Map<Hash, Long> ratings, final int iterations, final int maxDepth, final Set<Hash> maxDepthOk, final Random seed) throws Exception {

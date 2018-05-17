@@ -3,6 +3,7 @@ package com.iota.iri;
 import com.iota.iri.conf.Configuration;
 import com.iota.iri.controllers.TipsViewModel;
 import com.iota.iri.controllers.TransactionViewModel;
+import com.iota.iri.controllers.TransactionViewModelTest;
 import com.iota.iri.hash.SpongeFactory;
 import com.iota.iri.model.Hash;
 import com.iota.iri.network.TransactionRequester;
@@ -15,7 +16,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import static com.iota.iri.controllers.TransactionViewModelTest.getRandomTransactionTrits;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -64,7 +64,7 @@ public class TransactionValidatorTest {
 
   @Test
   public void validateBytes() throws Exception {
-    int[] trits = getRandomTransactionTrits();
+    int[] trits = TransactionViewModelTest.Companion.getRandomTransactionTrits();
     Converter.copyTrits(0, trits, 0, trits.length);
     byte[] bytes = Converter.allocateBytesForTrits(trits.length);
     Converter.bytes(trits, bytes);
@@ -73,20 +73,20 @@ public class TransactionValidatorTest {
 
   @Test
   public void validateTrits() {
-    int[] trits = getRandomTransactionTrits();
+    int[] trits = TransactionViewModelTest.Companion.getRandomTransactionTrits();
     Converter.copyTrits(0, trits, 0, trits.length);
     TransactionValidator.Companion.validate(trits, MAINNET_MWM);
   }
 
   @Test(expected = RuntimeException.class)
   public void validateTritsWithInvalidMetadata() {
-    int[] trits = getRandomTransactionTrits();
+    int[] trits = TransactionViewModelTest.Companion.getRandomTransactionTrits();
     TransactionValidator.Companion.validate(trits, MAINNET_MWM);
   }
 
   @Test
   public void validateBytesWithNewCurl() throws Exception {
-    int[] trits = getRandomTransactionTrits();
+    int[] trits = TransactionViewModelTest.Companion.getRandomTransactionTrits();
     Converter.copyTrits(0, trits, 0, trits.length);
     byte[] bytes = Converter.allocateBytesForTrits(trits.length);
     Converter.bytes(trits, 0, bytes, 0, trits.length);
@@ -109,7 +109,7 @@ public class TransactionValidatorTest {
 
   @Test
   public void addSolidTransactionWithoutErrors() {
-    int[] trits = getRandomTransactionTrits();
+    int[] trits = TransactionViewModelTest.Companion.getRandomTransactionTrits();
     Converter.copyTrits(0, trits, 0, trits.length);
     txValidator.addSolidTransaction(Hash.calculate(SpongeFactory.Mode.CURLP81, trits));
   }
@@ -123,7 +123,7 @@ public class TransactionValidatorTest {
     trunkTx = new TransactionViewModel(trits, Hash.calculate(SpongeFactory.Mode.CURLP81, trits));
     branchTx = new TransactionViewModel(trits, Hash.calculate(SpongeFactory.Mode.CURLP81, trits));
 
-    int[] childTx = getRandomTransactionTrits();
+    int[] childTx = TransactionViewModelTest.Companion.getRandomTransactionTrits();
     System.arraycopy(trunkTx.getHash().trits(), 0, childTx, TransactionViewModel.TRUNK_TRANSACTION_TRINARY_OFFSET, TransactionViewModel.TRUNK_TRANSACTION_TRINARY_SIZE);
     System.arraycopy(branchTx.getHash().trits(), 0, childTx, TransactionViewModel.BRANCH_TRANSACTION_TRINARY_OFFSET, TransactionViewModel.BRANCH_TRANSACTION_TRINARY_SIZE);
     tx = new TransactionViewModel(childTx, Hash.calculate(SpongeFactory.Mode.CURLP81, childTx));
@@ -136,7 +136,7 @@ public class TransactionValidatorTest {
   }
 
   private TransactionViewModel getTxWithoutBranchAndTrunk() throws Exception {
-    int[] trits = getRandomTransactionTrits();
+    int[] trits = TransactionViewModelTest.Companion.getRandomTransactionTrits();
     TransactionViewModel tx = new TransactionViewModel(trits, Hash.calculate(SpongeFactory.Mode.CURLP81, trits));
 
     tx.store(tangle);

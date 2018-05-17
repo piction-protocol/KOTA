@@ -1,6 +1,7 @@
 package com.iota.iri.storage;
 
 import com.iota.iri.controllers.TransactionViewModel;
+import com.iota.iri.controllers.TransactionViewModelTest;
 import com.iota.iri.hash.Curl;
 import com.iota.iri.hash.Sponge;
 import com.iota.iri.hash.SpongeFactory;
@@ -16,8 +17,6 @@ import org.junit.rules.TemporaryFolder;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Set;
-
-import static com.iota.iri.controllers.TransactionViewModelTest.getRandomTransactionTrits;
 
 /**
  * Created by paul on 3/3/17 for iri.
@@ -62,7 +61,7 @@ public class TangleTest {
 
     @Test
     public void getKeysStartingWithValue() throws Exception {
-        int[] trits = getRandomTransactionTrits();
+        int[] trits = TransactionViewModelTest.Companion.getRandomTransactionTrits();
         TransactionViewModel transactionViewModel = new TransactionViewModel(trits, Hash.calculate(SpongeFactory.Mode.CURLP81, trits));
         transactionViewModel.store(tangle);
         Set<Indexable> tag = tangle.keysStartingWith(Transaction.class, Arrays.copyOf(transactionViewModel.getTagValue().bytes(), 15));

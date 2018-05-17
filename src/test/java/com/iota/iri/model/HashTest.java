@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class HashTest {
     @Test
     public void calculate() throws Exception {
-        Hash hash = Hash.calculate(SpongeFactory.Mode.CURLP81, TransactionViewModelTest.getRandomTransactionTrits());
+        Hash hash = Hash.calculate(SpongeFactory.Mode.CURLP81, TransactionViewModelTest.Companion.getRandomTransactionTrits());
         Assert.assertNotEquals(0, hash.hashCode());
         Assert.assertNotEquals(null, hash.bytes());
         Assert.assertNotEquals(null, hash.trits());
@@ -23,7 +23,7 @@ public class HashTest {
 
     @Test
     public void calculate1() throws Exception {
-        Hash hash = Hash.calculate(TransactionViewModelTest.getRandomTransactionTrits(), 0, 729, SpongeFactory.INSTANCE.create(SpongeFactory.Mode.CURLP81));
+        Hash hash = Hash.calculate(TransactionViewModelTest.Companion.getRandomTransactionTrits(), 0, 729, SpongeFactory.INSTANCE.create(SpongeFactory.Mode.CURLP81));
         Assert.assertNotEquals(null, hash.bytes());
         Assert.assertNotEquals(0, hash.hashCode());
         Assert.assertNotEquals(null, hash.trits());
@@ -31,7 +31,7 @@ public class HashTest {
 
     @Test
     public void calculate2() throws Exception {
-        int[] trits = TransactionViewModelTest.getRandomTransactionTrits();
+        int[] trits = TransactionViewModelTest.Companion.getRandomTransactionTrits();
         byte[] bytes = Converter.allocateBytesForTrits(trits.length);
         Converter.bytes(trits, bytes);
         Hash hash = Hash.calculate(bytes, TransactionViewModel.TRINARY_SIZE, SpongeFactory.INSTANCE.create(SpongeFactory.Mode.CURLP81));
@@ -48,23 +48,23 @@ public class HashTest {
 
     @Test
     public void trits() throws Exception {
-        Hash hash = Hash.calculate(SpongeFactory.Mode.CURLP81, TransactionViewModelTest.getRandomTransactionTrits());
+        Hash hash = Hash.calculate(SpongeFactory.Mode.CURLP81, TransactionViewModelTest.Companion.getRandomTransactionTrits());
         Assert.assertFalse(Arrays.equals(new int[Hash.SIZE_IN_TRITS], hash.trits()));
     }
 
     @Test
     public void equals() throws Exception {
-        int[] trits = TransactionViewModelTest.getRandomTransactionTrits();
+        int[] trits = TransactionViewModelTest.Companion.getRandomTransactionTrits();
         Hash hash = Hash.calculate(SpongeFactory.Mode.CURLP81, trits);
         Hash hash1 = Hash.calculate(SpongeFactory.Mode.CURLP81, trits);
         Assert.assertTrue(hash.equals(hash1));
         Assert.assertFalse(hash.equals(Hash.NULL_HASH));
-        Assert.assertFalse(hash.equals(Hash.calculate(SpongeFactory.Mode.CURLP81, TransactionViewModelTest.getRandomTransactionTrits())));
+        Assert.assertFalse(hash.equals(Hash.calculate(SpongeFactory.Mode.CURLP81, TransactionViewModelTest.Companion.getRandomTransactionTrits())));
     }
 
     @Test
     public void hashCodeTest() throws Exception {
-        int[] trits = TransactionViewModelTest.getRandomTransactionTrits();
+        int[] trits = TransactionViewModelTest.Companion.getRandomTransactionTrits();
         Hash hash = Hash.calculate(SpongeFactory.Mode.CURLP81, trits);
         Assert.assertNotEquals(hash.hashCode(), 0);
         Assert.assertEquals(Hash.NULL_HASH.hashCode(), -240540129);
@@ -72,7 +72,7 @@ public class HashTest {
 
     @Test
     public void toStringTest() throws Exception {
-        int[] trits = TransactionViewModelTest.getRandomTransactionTrits();
+        int[] trits = TransactionViewModelTest.Companion.getRandomTransactionTrits();
         Hash hash = Hash.calculate(SpongeFactory.Mode.CURLP81, trits);
         Assert.assertEquals(Hash.NULL_HASH.toString(), "999999999999999999999999999999999999999999999999999999999999999999999999999999999");
         Assert.assertNotEquals(hash.toString(), "999999999999999999999999999999999999999999999999999999999999999999999999999999999");
@@ -82,7 +82,7 @@ public class HashTest {
 
     @Test
     public void bytes() throws Exception {
-        int[] trits = TransactionViewModelTest.getRandomTransactionTrits();
+        int[] trits = TransactionViewModelTest.Companion.getRandomTransactionTrits();
         Hash hash = Hash.calculate(SpongeFactory.Mode.CURLP81, trits);
         Assert.assertTrue(Arrays.equals(new byte[Hash.SIZE_IN_BYTES], Hash.NULL_HASH.bytes()));
         Assert.assertFalse(Arrays.equals(new byte[Hash.SIZE_IN_BYTES], hash.bytes()));
@@ -91,7 +91,7 @@ public class HashTest {
 
     @Test
     public void compareTo() throws Exception {
-        int[] trits = TransactionViewModelTest.getRandomTransactionTrits();
+        int[] trits = TransactionViewModelTest.Companion.getRandomTransactionTrits();
         Hash hash = Hash.calculate(SpongeFactory.Mode.CURLP81, trits);
         Assert.assertEquals(hash.compareTo(Hash.NULL_HASH), -Hash.NULL_HASH.compareTo(hash));
     }

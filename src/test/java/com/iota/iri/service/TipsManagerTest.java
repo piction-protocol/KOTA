@@ -7,6 +7,7 @@ import com.iota.iri.TransactionValidator;
 import com.iota.iri.conf.Configuration;
 import com.iota.iri.controllers.TipsViewModel;
 import com.iota.iri.controllers.TransactionViewModel;
+import com.iota.iri.controllers.TransactionViewModelTest;
 import com.iota.iri.model.Hash;
 import com.iota.iri.network.TransactionRequester;
 import com.iota.iri.storage.Tangle;
@@ -19,10 +20,6 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import java.util.*;
-
-import static com.iota.iri.controllers.TransactionViewModelTest.getRandomTransactionHash;
-import static com.iota.iri.controllers.TransactionViewModelTest.getRandomTransactionTrits;
-import static com.iota.iri.controllers.TransactionViewModelTest.getRandomTransactionWithTrunkAndBranch;
 
 /**
  * Created by paul on 4/27/17.
@@ -75,9 +72,9 @@ public class TipsManagerTest {
     @Test
     public void updateLinearRatingsTestWorks() throws Exception {
         TransactionViewModel transaction, transaction1, transaction2;
-        transaction = new TransactionViewModel(getRandomTransactionTrits(), getRandomTransactionHash());
-        transaction1 = new TransactionViewModel(getRandomTransactionWithTrunkAndBranch(transaction.getHash(), transaction.getHash()), getRandomTransactionHash());
-        transaction2 = new TransactionViewModel(getRandomTransactionWithTrunkAndBranch(transaction1.getHash(), transaction1.getHash()), getRandomTransactionHash());
+        transaction = new TransactionViewModel(TransactionViewModelTest.Companion.getRandomTransactionTrits(), TransactionViewModelTest.Companion.getRandomTransactionHash());
+        transaction1 = new TransactionViewModel(TransactionViewModelTest.Companion.getRandomTransactionWithTrunkAndBranch(transaction.getHash(), transaction.getHash()), TransactionViewModelTest.Companion.getRandomTransactionHash());
+        transaction2 = new TransactionViewModel(TransactionViewModelTest.Companion.getRandomTransactionWithTrunkAndBranch(transaction1.getHash(), transaction1.getHash()), TransactionViewModelTest.Companion.getRandomTransactionHash());
         transaction.store(tangle);
         transaction1.store(tangle);
         transaction2.store(tangle);
@@ -91,11 +88,11 @@ public class TipsManagerTest {
     @Test
     public void updateRatingsTestWorks() throws Exception {
         TransactionViewModel transaction, transaction1, transaction2, transaction3, transaction4;
-        transaction = new TransactionViewModel(getRandomTransactionTrits(), getRandomTransactionHash());
-        transaction1 = new TransactionViewModel(getRandomTransactionWithTrunkAndBranch(transaction.getHash(), transaction.getHash()), getRandomTransactionHash());
-        transaction2 = new TransactionViewModel(getRandomTransactionWithTrunkAndBranch(transaction1.getHash(), transaction1.getHash()), getRandomTransactionHash());
-        transaction3 = new TransactionViewModel(getRandomTransactionWithTrunkAndBranch(transaction2.getHash(), transaction1.getHash()), getRandomTransactionHash());
-        transaction4 = new TransactionViewModel(getRandomTransactionWithTrunkAndBranch(transaction2.getHash(), transaction3.getHash()), getRandomTransactionHash());
+        transaction = new TransactionViewModel(TransactionViewModelTest.Companion.getRandomTransactionTrits(), TransactionViewModelTest.Companion.getRandomTransactionHash());
+        transaction1 = new TransactionViewModel(TransactionViewModelTest.Companion.getRandomTransactionWithTrunkAndBranch(transaction.getHash(), transaction.getHash()), TransactionViewModelTest.Companion.getRandomTransactionHash());
+        transaction2 = new TransactionViewModel(TransactionViewModelTest.Companion.getRandomTransactionWithTrunkAndBranch(transaction1.getHash(), transaction1.getHash()), TransactionViewModelTest.Companion.getRandomTransactionHash());
+        transaction3 = new TransactionViewModel(TransactionViewModelTest.Companion.getRandomTransactionWithTrunkAndBranch(transaction2.getHash(), transaction1.getHash()), TransactionViewModelTest.Companion.getRandomTransactionHash());
+        transaction4 = new TransactionViewModel(TransactionViewModelTest.Companion.getRandomTransactionWithTrunkAndBranch(transaction2.getHash(), transaction3.getHash()), TransactionViewModelTest.Companion.getRandomTransactionHash());
         transaction.store(tangle);
         transaction1.store(tangle);
         transaction2.store(tangle);
@@ -111,11 +108,11 @@ public class TipsManagerTest {
     @Test
     public void updateRatings2TestWorks() throws Exception {
         TransactionViewModel transaction, transaction1, transaction2, transaction3, transaction4;
-        transaction = new TransactionViewModel(getRandomTransactionTrits(), getRandomTransactionHash());
-        transaction1 = new TransactionViewModel(getRandomTransactionWithTrunkAndBranch(transaction.getHash(), transaction.getHash()), getRandomTransactionHash());
-        transaction2 = new TransactionViewModel(getRandomTransactionWithTrunkAndBranch(transaction1.getHash(), transaction1.getHash()), getRandomTransactionHash());
-        transaction3 = new TransactionViewModel(getRandomTransactionWithTrunkAndBranch(transaction2.getHash(), transaction2.getHash()), getRandomTransactionHash());
-        transaction4 = new TransactionViewModel(getRandomTransactionWithTrunkAndBranch(transaction3.getHash(), transaction3.getHash()), getRandomTransactionHash());
+        transaction = new TransactionViewModel(TransactionViewModelTest.Companion.getRandomTransactionTrits(), TransactionViewModelTest.Companion.getRandomTransactionHash());
+        transaction1 = new TransactionViewModel(TransactionViewModelTest.Companion.getRandomTransactionWithTrunkAndBranch(transaction.getHash(), transaction.getHash()), TransactionViewModelTest.Companion.getRandomTransactionHash());
+        transaction2 = new TransactionViewModel(TransactionViewModelTest.Companion.getRandomTransactionWithTrunkAndBranch(transaction1.getHash(), transaction1.getHash()), TransactionViewModelTest.Companion.getRandomTransactionHash());
+        transaction3 = new TransactionViewModel(TransactionViewModelTest.Companion.getRandomTransactionWithTrunkAndBranch(transaction2.getHash(), transaction2.getHash()), TransactionViewModelTest.Companion.getRandomTransactionHash());
+        transaction4 = new TransactionViewModel(TransactionViewModelTest.Companion.getRandomTransactionWithTrunkAndBranch(transaction3.getHash(), transaction3.getHash()), TransactionViewModelTest.Companion.getRandomTransactionHash());
         transaction.store(tangle);
         transaction1.store(tangle);
         transaction2.store(tangle);
@@ -129,11 +126,11 @@ public class TipsManagerTest {
     @Test
     public void updateRatingsSerialWorks() throws Exception {
         Hash[] hashes = new Hash[5];
-        hashes[0] = getRandomTransactionHash();
-        new TransactionViewModel(getRandomTransactionTrits(), hashes[0]).store(tangle);
+        hashes[0] = TransactionViewModelTest.Companion.getRandomTransactionHash();
+        new TransactionViewModel(TransactionViewModelTest.Companion.getRandomTransactionTrits(), hashes[0]).store(tangle);
         for(int i = 1; i < hashes.length; i ++) {
-            hashes[i] = getRandomTransactionHash();
-            new TransactionViewModel(getRandomTransactionWithTrunkAndBranch(hashes[i-1], hashes[i-1]), hashes[i]).store(tangle);
+            hashes[i] = TransactionViewModelTest.Companion.getRandomTransactionHash();
+            new TransactionViewModel(TransactionViewModelTest.Companion.getRandomTransactionWithTrunkAndBranch(hashes[i-1], hashes[i-1]), hashes[i]).store(tangle);
         }
         Map<Hash, Long> ratings = new HashMap<>();
         tipsManager.recursiveUpdateRatings(hashes[0], ratings, new HashSet<>());
@@ -143,11 +140,11 @@ public class TipsManagerTest {
     @Test
     public void updateRatingsSerialWorks2() throws Exception {
         Hash[] hashes = new Hash[5];
-        hashes[0] = getRandomTransactionHash();
-        new TransactionViewModel(getRandomTransactionTrits(), hashes[0]).store(tangle);
+        hashes[0] = TransactionViewModelTest.Companion.getRandomTransactionHash();
+        new TransactionViewModel(TransactionViewModelTest.Companion.getRandomTransactionTrits(), hashes[0]).store(tangle);
         for(int i = 1; i < hashes.length; i ++) {
-            hashes[i] = getRandomTransactionHash();
-            new TransactionViewModel(getRandomTransactionWithTrunkAndBranch(hashes[i-1], hashes[i-(i > 1 ?2:1)]), hashes[i]).store(tangle);
+            hashes[i] = TransactionViewModelTest.Companion.getRandomTransactionHash();
+            new TransactionViewModel(TransactionViewModelTest.Companion.getRandomTransactionWithTrunkAndBranch(hashes[i-1], hashes[i-(i > 1 ?2:1)]), hashes[i]).store(tangle);
         }
         Map<Hash, Long> ratings = new HashMap<>();
         tipsManager.recursiveUpdateRatings(hashes[0], ratings, new HashSet<>());
@@ -168,12 +165,12 @@ public class TipsManagerTest {
 
     public long ratingTime(int size) throws Exception {
         Hash[] hashes = new Hash[size];
-        hashes[0] = getRandomTransactionHash();
-        new TransactionViewModel(getRandomTransactionTrits(), hashes[0]).store(tangle);
+        hashes[0] = TransactionViewModelTest.Companion.getRandomTransactionHash();
+        new TransactionViewModel(TransactionViewModelTest.Companion.getRandomTransactionTrits(), hashes[0]).store(tangle);
         Random random = new Random();
         for(int i = 1; i < hashes.length; i ++) {
-            hashes[i] = getRandomTransactionHash();
-            new TransactionViewModel(getRandomTransactionWithTrunkAndBranch(hashes[i-random.nextInt(i)-1], hashes[i-random.nextInt(i)-1]), hashes[i]).store(tangle);
+            hashes[i] = TransactionViewModelTest.Companion.getRandomTransactionHash();
+            new TransactionViewModel(TransactionViewModelTest.Companion.getRandomTransactionWithTrunkAndBranch(hashes[i-random.nextInt(i)-1], hashes[i-random.nextInt(i)-1]), hashes[i]).store(tangle);
         }
         Map<Hash, Long> ratings = new HashMap<>();
         long start = System.currentTimeMillis();

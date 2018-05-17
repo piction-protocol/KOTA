@@ -79,7 +79,7 @@ public class TipsViewModelTest {
         int capacity = TipsViewModel.Companion.getMAX_TIPS();
         //fill tips list
         for (int i = 0; i < capacity * 2 ; i++) {
-            Hash hash = TransactionViewModelTest.getRandomTransactionHash();
+            Hash hash = TransactionViewModelTest.Companion.getRandomTransactionHash();
             tipsVM.addTipHash(hash);
         }
         //check that limit wasn't breached
@@ -92,7 +92,7 @@ public class TipsViewModelTest {
         int capacity = TipsViewModel.Companion.getMAX_TIPS();
         //fill tips list
         for (int i = 0; i < capacity * 2 ; i++) {
-            Hash hash = TransactionViewModelTest.getRandomTransactionHash();
+            Hash hash = TransactionViewModelTest.Companion.getRandomTransactionHash();
             tipsVM.addTipHash(hash);
             tipsVM.setSolid(hash);
         }
@@ -106,7 +106,7 @@ public class TipsViewModelTest {
         int capacity = TipsViewModel.Companion.getMAX_TIPS();
         //fill tips list
         for (int i = 0; i <= capacity * 4; i++) {
-            Hash hash = TransactionViewModelTest.getRandomTransactionHash();
+            Hash hash = TransactionViewModelTest.Companion.getRandomTransactionHash();
             tipsVM.addTipHash(hash);
             if (i % 2 == 1) {
                 tipsVM.setSolid(hash);

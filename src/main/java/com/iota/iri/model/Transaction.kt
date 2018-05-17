@@ -12,20 +12,20 @@ import java.nio.ByteBuffer
 
 class Transaction : Persistable {
 
-    lateinit var bytes: ByteArray
+    var bytes: ByteArray? = null
 
-    lateinit var address: Hash
-    lateinit var bundle: Hash
-    lateinit var trunk: Hash
-    lateinit var branch: Hash
-    lateinit var obsoleteTag: Hash
+    var address: Hash? = null
+    var bundle: Hash? = null
+    var trunk: Hash? = null
+    var branch: Hash? = null
+    var obsoleteTag: Hash? = null
 
     var value: Long = 0
     var currentIndex: Long = 0
     var lastIndex: Long = 0
     var timestamp: Long = 0
 
-    lateinit var tag: Hash
+    var tag: Hash? = null
     var attachmentTimestamp: Long = 0
     var attachmentTimestampLowerBound: Long = 0
     var attachmentTimestampUpperBound: Long = 0
@@ -42,7 +42,7 @@ class Transaction : Persistable {
     var snapshot: Int = 0
 
     override fun bytes(): ByteArray {
-        return bytes
+        return bytes?.let { bytes } ?: ByteArray(0)
     }
 
     override fun read(bytes: ByteArray?) {
@@ -60,17 +60,17 @@ class Transaction : Persistable {
                 1 + //solid
                 sender.toByteArray().size //sender
         val buffer = ByteBuffer.allocate(allocateSize)
-        buffer.put(address.bytes())
-        buffer.put(bundle.bytes())
-        buffer.put(trunk.bytes())
-        buffer.put(branch.bytes())
-        buffer.put(obsoleteTag.bytes())
+        buffer.put(address?.bytes())
+        buffer.put(bundle?.bytes())
+        buffer.put(trunk?.bytes())
+        buffer.put(branch?.bytes())
+        buffer.put(obsoleteTag?.bytes())
         buffer.put(Serializer.serialize(value))
         buffer.put(Serializer.serialize(currentIndex))
         buffer.put(Serializer.serialize(lastIndex))
         buffer.put(Serializer.serialize(timestamp))
 
-        buffer.put(tag.bytes())
+        buffer.put(tag?.bytes())
         buffer.put(Serializer.serialize(attachmentTimestamp))
         buffer.put(Serializer.serialize(attachmentTimestampLowerBound))
         buffer.put(Serializer.serialize(attachmentTimestampUpperBound))

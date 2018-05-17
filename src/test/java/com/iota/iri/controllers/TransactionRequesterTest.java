@@ -78,7 +78,7 @@ public class TransactionRequesterTest {
         int capacity = TransactionRequester.MAX_TX_REQ_QUEUE_SIZE;
         //fill tips list
         for (int i = 0; i < capacity * 2 ; i++) {
-            Hash hash = TransactionViewModelTest.getRandomTransactionHash();
+            Hash hash = TransactionViewModelTest.Companion.getRandomTransactionHash();
             txReq.requestTransaction(hash,false);
         }
         //check that limit wasn't breached
@@ -91,7 +91,7 @@ public class TransactionRequesterTest {
         int capacity = TransactionRequester.MAX_TX_REQ_QUEUE_SIZE;
         //fill tips list
         for (int i = 0; i < capacity * 2 ; i++) {
-            Hash hash = TransactionViewModelTest.getRandomTransactionHash();
+            Hash hash = TransactionViewModelTest.Companion.getRandomTransactionHash();
             txReq.requestTransaction(hash,true);
         }
         //check that limit was surpassed
@@ -104,7 +104,7 @@ public class TransactionRequesterTest {
         int capacity = TransactionRequester.MAX_TX_REQ_QUEUE_SIZE;
         //fill tips list
         for (int i = 0; i < capacity * 4 ; i++) {
-            Hash hash = TransactionViewModelTest.getRandomTransactionHash();
+            Hash hash = TransactionViewModelTest.Companion.getRandomTransactionHash();
             txReq.requestTransaction(hash, (i % 2 == 1));
 
         }

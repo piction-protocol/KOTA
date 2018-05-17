@@ -53,7 +53,7 @@ public class PearlDiverTest {
     @Ignore("to test pearlDiver iteratively")
     public void testNoRandomFail() {
         for (int i = 0; i < 10000; i++) {
-            int[] trits = TransactionViewModelTest.getRandomTransactionTrits();
+            int[] trits = TransactionViewModelTest.Companion.getRandomTransactionTrits();
             pearlDiver.search(trits, MIN_WEIGHT_MAGNITUDE, NUM_CORES);
             Hash hash = Hash.calculate(SpongeFactory.Mode.CURLP81, trits);
             for (int j = Hash.SIZE_IN_TRITS - 1; j > Hash.SIZE_IN_TRITS - MIN_WEIGHT_MAGNITUDE; j--) {

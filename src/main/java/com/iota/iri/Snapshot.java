@@ -31,7 +31,7 @@ public class Snapshot {
     public static Snapshot init(String snapshotPath, String snapshotSigPath, boolean testnet) throws IOException {
         //This is not thread-safe (and it is ok)
         if (initialSnapshot == null) {
-            if (!testnet && !SignedFiles.isFileSignatureValid(snapshotPath, snapshotSigPath, SNAPSHOT_PUBKEY,
+            if (!testnet && !SignedFiles.INSTANCE.isFileSignatureValid(snapshotPath, snapshotSigPath, SNAPSHOT_PUBKEY,
                     SNAPSHOT_PUBKEY_DEPTH, SNAPSHOT_INDEX)) {
                 throw new RuntimeException("Snapshot signature failed.");
             }

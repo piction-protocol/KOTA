@@ -16,7 +16,6 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import static com.iota.iri.controllers.TransactionViewModelTest.getRandomTransactionTrits;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -69,20 +68,20 @@ public class TransactionValidatorTest {
     Converter.copyTrits(0, trits, 0, trits.length);
     byte[] bytes = Converter.allocateBytesForTrits(trits.length);
     Converter.bytes(trits, bytes);
-    TransactionValidator.validate(bytes, MAINNET_MWM);
+    TransactionValidator.Companion.validate(bytes, MAINNET_MWM);
   }
 
   @Test
   public void validateTrits() {
     int[] trits = getRandomTransactionTrits();
     Converter.copyTrits(0, trits, 0, trits.length);
-    TransactionValidator.validate(trits, MAINNET_MWM);
+    TransactionValidator.Companion.validate(trits, MAINNET_MWM);
   }
 
   @Test(expected = RuntimeException.class)
   public void validateTritsWithInvalidMetadata() {
     int[] trits = getRandomTransactionTrits();
-    TransactionValidator.validate(trits, MAINNET_MWM);
+    TransactionValidator.Companion.validate(trits, MAINNET_MWM);
   }
 
   @Test
@@ -91,7 +90,7 @@ public class TransactionValidatorTest {
     Converter.copyTrits(0, trits, 0, trits.length);
     byte[] bytes = Converter.allocateBytesForTrits(trits.length);
     Converter.bytes(trits, 0, bytes, 0, trits.length);
-    TransactionValidator.validate(bytes, txValidator.getMinWeightMagnitude(), SpongeFactory.INSTANCE.create(SpongeFactory.Mode.CURLP81));
+    TransactionValidator.Companion.validate(bytes, txValidator.getMinWeightMagnitude(), SpongeFactory.INSTANCE.create(SpongeFactory.Mode.CURLP81));
   }
 
   @Test

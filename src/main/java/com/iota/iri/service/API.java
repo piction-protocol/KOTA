@@ -150,7 +150,7 @@ public class API {
             return;
         }
 
-        if (!SignedFiles.isFileSignatureValid(Configuration.Companion.getPREVIOUS_EPOCHS_SPENT_ADDRESSES_TXT(),
+        if (!SignedFiles.INSTANCE.isFileSignatureValid(Configuration.Companion.getPREVIOUS_EPOCHS_SPENT_ADDRESSES_TXT(),
                 Configuration.Companion.getPREVIOUS_EPOCH_SPENT_ADDRESSES_SIG(),
                 Snapshot.SNAPSHOT_PUBKEY, Snapshot.SNAPSHOT_PUBKEY_DEPTH, Snapshot.SPENT_ADDRESSES_INDEX)) {
             throw new RuntimeException("Failed to load previousEpochsSpentAddresses - signature failed.");
@@ -650,7 +650,7 @@ public class API {
         for (final String trytes : trys) {
             //validate all trytes
             Converter.trits(trytes, txTrits, 0);
-            final TransactionViewModel transactionViewModel = instance.transactionValidator.validate(txTrits,
+            final TransactionViewModel transactionViewModel = instance.transactionValidator.Companion.validate(txTrits,
                     instance.transactionValidator.getMinWeightMagnitude());
             elements.add(transactionViewModel);
         }
@@ -870,7 +870,7 @@ public class API {
         for (final String tryte : trytes2) {
             //validate all trytes
             Converter.trits(tryte, txTrits, 0);
-            final TransactionViewModel transactionViewModel = instance.transactionValidator.validate(txTrits, instance.transactionValidator.getMinWeightMagnitude());
+            final TransactionViewModel transactionViewModel = instance.transactionValidator.Companion.validate(txTrits, instance.transactionValidator.getMinWeightMagnitude());
             elements.add(transactionViewModel);
         }
         for (final TransactionViewModel transactionViewModel : elements) {
@@ -989,7 +989,7 @@ public class API {
                     break;
                 }
                 //validate PoW - throws exception if invalid
-                final TransactionViewModel transactionViewModel = instance.transactionValidator.validate(transactionTrits, instance.transactionValidator.getMinWeightMagnitude());
+                final TransactionViewModel transactionViewModel = instance.transactionValidator.Companion.validate(transactionTrits, instance.transactionValidator.getMinWeightMagnitude());
 
                 transactionViewModels.add(transactionViewModel);
                 prevTransaction = transactionViewModel.getHash();

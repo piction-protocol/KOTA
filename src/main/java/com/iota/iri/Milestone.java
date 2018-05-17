@@ -207,9 +207,9 @@ public class Milestone {
                         final int[] trunkTransactionTrits = transactionViewModel.getTrunkTransactionHash().trits();
                         final int[] signatureFragmentTrits = Arrays.copyOfRange(transactionViewModel.trits(), TransactionViewModel.SIGNATURE_MESSAGE_FRAGMENT_TRINARY_OFFSET, TransactionViewModel.SIGNATURE_MESSAGE_FRAGMENT_TRINARY_OFFSET + TransactionViewModel.SIGNATURE_MESSAGE_FRAGMENT_TRINARY_SIZE);
 
-                        final int[] merkleRoot = ISS.getMerkleRoot(mode, ISS.address(mode, ISS.digest(mode,
-                                Arrays.copyOf(ISS.normalizedBundle(trunkTransactionTrits),
-                                        ISS.NUMBER_OF_FRAGMENT_CHUNKS),
+                        final int[] merkleRoot = ISS.INSTANCE.getMerkleRoot(mode, ISS.INSTANCE.address(mode, ISS.INSTANCE.digest(mode,
+                                Arrays.copyOf(ISS.INSTANCE.normalizedBundle(trunkTransactionTrits),
+                                        ISS.INSTANCE.getNUMBER_OF_FRAGMENT_CHUNKS()),
                                 signatureFragmentTrits)),
                                 transactionViewModel2.trits(), 0, index, numOfKeysInMilestone);
                         if ((testnet && acceptAnyTestnetCoo) || (new Hash(merkleRoot)).equals(coordinator)) {

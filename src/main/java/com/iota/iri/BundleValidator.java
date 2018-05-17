@@ -33,7 +33,7 @@ public class BundleValidator {
 
                 final int[] addressTrits = new int[TransactionViewModel.ADDRESS_TRINARY_SIZE];
                 final int[] bundleHashTrits = new int[TransactionViewModel.BUNDLE_TRINARY_SIZE];
-                final int[] normalizedBundle = new int[Curl.HASH_LENGTH / ISS.TRYTE_WIDTH];
+                final int[] normalizedBundle = new int[Curl.HASH_LENGTH / ISS.INSTANCE.getTRYTE_WIDTH()];
                 final int[] digestTrits = new int[Curl.HASH_LENGTH];
 
                 MAIN_LOOP:
@@ -69,7 +69,7 @@ public class BundleValidator {
                                 curlInstance.squeeze(bundleHashTrits, 0, bundleHashTrits.length);
                                 if (Arrays.equals(instanceTransactionViewModels.get(0).getBundleHash().trits(), bundleHashTrits)) {
 
-                                    ISSInPlace.normalizedBundle(bundleHashTrits, normalizedBundle);
+                                    ISSInPlace.INSTANCE.normalizedBundle(bundleHashTrits, normalizedBundle);
 
                                     for (int j = 0; j < instanceTransactionViewModels.size(); ) {
 
@@ -78,8 +78,8 @@ public class BundleValidator {
                                             addressInstance.reset();
                                             int offset = 0, offsetNext = 0;
                                             do {
-                                                offsetNext = (offset + ISS.NUMBER_OF_FRAGMENT_CHUNKS - 1) % (Curl.HASH_LENGTH / Converter.NUMBER_OF_TRITS_IN_A_TRYTE) + 1;
-                                                ISSInPlace.digest(SpongeFactory.Mode.KERL,
+                                                offsetNext = (offset + ISS.INSTANCE.getNUMBER_OF_FRAGMENT_CHUNKS() - 1) % (Curl.HASH_LENGTH / Converter.NUMBER_OF_TRITS_IN_A_TRYTE) + 1;
+                                                ISSInPlace.INSTANCE.digest(SpongeFactory.Mode.KERL,
                                                     normalizedBundle,
                                                     offset % (Curl.HASH_LENGTH / Converter.NUMBER_OF_TRITS_IN_A_TRYTE),
                                                     instanceTransactionViewModels.get(j).trits(),

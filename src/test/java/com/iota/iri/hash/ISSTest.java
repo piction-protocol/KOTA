@@ -35,8 +35,8 @@ public class ISSTest {
 
         for (SpongeFactory.Mode mode: modes) {
             Converter.trits(seed, seedTrits, 0);
-            int[] subseed = ISS.subseed(mode, seedTrits, index);
-            int[] key = ISS.key(mode, subseed, nof);
+            int[] subseed = ISS.INSTANCE.subseed(mode, seedTrits, index);
+            int[] key = ISS.INSTANCE.key(mode, subseed, nof);
 
 
             Kerl curl = new Kerl();
@@ -46,13 +46,13 @@ public class ISSTest {
             int[] messageHash = new int[Curl.HASH_LENGTH];
             curl.squeeze(messageHash, 0, Curl.HASH_LENGTH);
             int[] normalizedFragment =
-                    Arrays.copyOf(ISS.normalizedBundle(messageHash),
-                            ISS.NUMBER_OF_FRAGMENT_CHUNKS);
-            int[] signature = ISS.signatureFragment(mode, normalizedFragment, key);
-            int[] sigDigest = ISS.digest(mode, normalizedFragment, signature);
-            int[] signedAddress = ISS.address(mode, sigDigest);
-            int[] digest = ISS.digests(mode, key);
-            int[] address = ISS.address(mode, digest);
+                    Arrays.copyOf(ISS.INSTANCE.normalizedBundle(messageHash),
+                            ISS.INSTANCE.getNUMBER_OF_FRAGMENT_CHUNKS());
+            int[] signature = ISS.INSTANCE.signatureFragment(mode, normalizedFragment, key);
+            int[] sigDigest = ISS.INSTANCE.digest(mode, normalizedFragment, signature);
+            int[] signedAddress = ISS.INSTANCE.address(mode, sigDigest);
+            int[] digest = ISS.INSTANCE.digests(mode, key);
+            int[] address = ISS.INSTANCE.address(mode, digest);
             assertTrue(Arrays.equals(address, signedAddress));
         }
     }
@@ -69,10 +69,10 @@ public class ISSTest {
             int[] seedTrits = Converter.allocateTritsForTrytes(seed.length());
             Converter.trits(seed, seedTrits, 0);
 
-            int[] subseed = ISS.subseed(mode, seedTrits, index);
-            int[] key = ISS.key(mode, subseed, nof);
-            int[] digest = ISS.digests(mode, key);
-            int[] address = ISS.address(mode, digest);
+            int[] subseed = ISS.INSTANCE.subseed(mode, seedTrits, index);
+            int[] key = ISS.INSTANCE.key(mode, subseed, nof);
+            int[] digest = ISS.INSTANCE.digests(mode, key);
+            int[] address = ISS.INSTANCE.address(mode, digest);
             Hash addressTrytes = new Hash(address);
             assertEquals(hashes[i].toString(), addressTrytes.toString());
         }
@@ -97,10 +97,10 @@ public class ISSTest {
             Hash[] addresses = new Hash[4];
 
             for (int j = 0; j< 4 ; j++) {
-                int[] subseed = ISS.subseed(mode, seed.trits(), j);
-                int[] key = ISS.key(mode, subseed, nof);
-                int[] digest = ISS.digests(mode, key);
-                int[] address = ISS.address(mode, digest);
+                int[] subseed = ISS.INSTANCE.subseed(mode, seed.trits(), j);
+                int[] key = ISS.INSTANCE.key(mode, subseed, nof);
+                int[] digest = ISS.INSTANCE.digests(mode, key);
+                int[] address = ISS.INSTANCE.address(mode, digest);
                 addresses[j] = new Hash(address);
             }
             System.out.println(String.format("%s,%s,%s,%s,%s", seed, addresses[0],addresses[1],addresses[2],addresses[3]));

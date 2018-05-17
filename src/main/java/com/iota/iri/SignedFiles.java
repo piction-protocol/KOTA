@@ -21,7 +21,7 @@ public class SignedFiles {
         //validate signature
         SpongeFactory.Mode mode = SpongeFactory.Mode.CURLP81;
         int[] digests = new int[0];
-        int[] bundle = ISS.normalizedBundle(digest);
+        int[] bundle = ISS.INSTANCE.normalizedBundle(digest);
         int[] root;
         int i;
 
@@ -33,17 +33,17 @@ public class SignedFiles {
             for (i = 0; i < 3 && (line = reader.readLine()) != null; i++) {
                 int[] lineTrits = Converter.allocateTritsForTrytes(line.length());
                 Converter.trits(line, lineTrits, 0);
-                int[] normalizedBundleFragment = Arrays.copyOfRange(bundle, i * ISS.NORMALIZED_FRAGMENT_LENGTH, (i + 1) * ISS.NORMALIZED_FRAGMENT_LENGTH);
-                int[] issDigest = ISS.digest(mode, normalizedBundleFragment, lineTrits);
+                int[] normalizedBundleFragment = Arrays.copyOfRange(bundle, i * ISS.INSTANCE.getNORMALIZED_FRAGMENT_LENGTH(), (i + 1) * ISS.INSTANCE.getNORMALIZED_FRAGMENT_LENGTH());
+                int[] issDigest = ISS.INSTANCE.digest(mode, normalizedBundleFragment, lineTrits);
                 digests = ArrayUtils.addAll(digests, issDigest);
             }
 
             if ((line = reader.readLine()) != null) {
                 int[] lineTrits = Converter.allocateTritsForTrytes(line.length());
                 Converter.trits(line, lineTrits, 0);
-                root = ISS.getMerkleRoot(mode, ISS.address(mode, digests), lineTrits, 0, index, depth);
+                root = ISS.INSTANCE.getMerkleRoot(mode, ISS.INSTANCE.address(mode, digests), lineTrits, 0, index, depth);
             } else {
-                root = ISS.address(mode, digests);
+                root = ISS.INSTANCE.address(mode, digests);
             }
 
             int[] pubkeyTrits = Converter.allocateTritsForTrytes(publicKey.length());

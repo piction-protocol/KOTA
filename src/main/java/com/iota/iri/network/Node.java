@@ -318,7 +318,7 @@ public class Node {
         if (!addressMatch && configuration.booling(Configuration.DefaultConfSettings.TESTNET)) {
             int maxPeersAllowed = configuration.integer(Configuration.DefaultConfSettings.MAX_PEERS);
             String uriString = uriScheme + ":/" + senderAddress.toString();
-            if (Neighbor.getNumPeers() < maxPeersAllowed) {
+            if (Neighbor.Companion.getNumPeers() < maxPeersAllowed) {
                 log.info("Adding non-tethered neighbor: " + uriString);
                 messageQ.publish("antn %s", uriString);
                 try {
@@ -327,7 +327,7 @@ public class Node {
                     final Neighbor newneighbor = newNeighbor(uri, false);
                     if (!getNeighbors().contains(newneighbor)) {
                         getNeighbors().add(newneighbor);
-                        Neighbor.incNumPeers();
+                        Neighbor.Companion.incNumPeers();
                     }
                 } catch (URISyntaxException e) {
                     log.error("Invalid URI string: " + uriString);

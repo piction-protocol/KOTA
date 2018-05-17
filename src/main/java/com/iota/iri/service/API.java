@@ -177,9 +177,9 @@ public class API {
         final AbstractResponse response;
 
         if (!exchange.getRequestHeaders().contains("X-IOTA-API-Version")) {
-            response = ErrorResponse.create("Invalid API Version");
+            response = ErrorResponse.Companion.create("Invalid API Version");
         } else if (body.length() > maxBodyLength) {
-            response = ErrorResponse.create("Request too long");
+            response = ErrorResponse.Companion.create("Request too long");
         } else {
             response = process(body, exchange.getSourceAddress());
         }
@@ -197,12 +197,12 @@ public class API {
 
             final String command = (String) request.get("command");
             if (command == null) {
-                return ErrorResponse.create("COMMAND parameter has not been specified in the request.");
+                return ErrorResponse.Companion.create("COMMAND parameter has not been specified in the request.");
             }
 
             if (instance.configuration.string(DefaultConfSettings.REMOTE_LIMIT_API).contains(command) &&
                     !sourceAddress.getAddress().isLoopbackAddress()) {
-                return AccessLimitedResponse.create("COMMAND " + command + " is not available on this node");
+                return AccessLimitedResponse.Companion.create("COMMAND " + command + " is not available on this node");
             }
 
             log.debug("# {} -> Requesting command '{}'", counter.incrementAndGet(), command);
@@ -210,15 +210,15 @@ public class API {
             switch (command) {
                 case "storeMessage": {
                     if (!testNet) {
-                        return AccessLimitedResponse.create("COMMAND storeMessage is only available on testnet");
+                        return AccessLimitedResponse.Companion.create("COMMAND storeMessage is only available on testnet");
                     }
 
                     if (!request.containsKey("address") || !request.containsKey("message")) {
-                        return ErrorResponse.create("Invalid params");
+                        return ErrorResponse.Companion.create("Invalid params");
                     }
 
                     if (invalidSubtangleStatus()) {
-                        return ErrorResponse
+                        return ErrorResponse.Companion
                                 .create("This operations cannot be executed: The subtangle has not been updated yet.");
                     }
 
@@ -226,7 +226,7 @@ public class API {
                     final String message = (String) request.get("message");
 
                     storeMessageStatement(address, message);
-                    return AbstractResponse.createEmptyResponse();
+                    return AbstractResponse.Companion.createEmptyResponse();
                 }
 
                 case "addNeighbors": {
@@ -242,12 +242,12 @@ public class API {
                     final List<String> trytes = getParameterAsList(request,"trytes", TRYTES_SIZE);
 
                     List<String> elements = attachToTangleStatement(trunkTransaction, branchTransaction, minWeightMagnitude, trytes);
-                    return AttachToTangleResponse.create(elements);
+                    return AttachToTangleResponse.Companion.create(elements);
                 }
                 case "broadcastTransactions": {
                     final List<String> trytes = getParameterAsList(request,"trytes", TRYTES_SIZE);
                     broadcastTransactionStatement(trytes);
-                    return AbstractResponse.createEmptyResponse();
+                    return AbstractResponse.Companion.createEmptyResponse();
                 }
                 case "findTransactions": {
                     return findTransactionStatement(request);
@@ -262,7 +262,7 @@ public class API {
                 }
                 case "getInclusionStates": {
                     if (invalidSubtangleStatus()) {
-                        return ErrorResponse
+                        return ErrorResponse.Companion
                                 .create("This operations cannot be executed: The subtangle has not been updated yet.");
                     }
                     final List<String> transactions = getParameterAsList(request,"transactions", HASH_SIZE);
@@ -288,14 +288,14 @@ public class API {
                 }
                 case "getTransactionsToApprove": {
                     if (invalidSubtangleStatus()) {
-                        return ErrorResponse
+                        return ErrorResponse.Companion
                                 .create("This operations cannot be executed: The subtangle has not been updated yet.");
                     }
 
                     final String reference = request.containsKey("reference") ? getParameterAsStringAndValidate(request,"reference", HASH_SIZE) : null;
                     final int depth = getParameterAsInt(request, "depth");
                     if(depth < 0 || (reference == null && depth == 0)) {
-                        return ErrorResponse.create("Invalid depth input");
+                        return ErrorResponse.Companion.create("Invalid depth input");
                     }
                     int numWalks = request.containsKey("numWalks") ? getParameterAsInt(request,"numWalks") : 1;
                     if(numWalks < minRandomWalks) {
@@ -304,12 +304,12 @@ public class API {
                     try {
                         final Hash[] tips = getTransactionToApproveStatement(depth, reference, numWalks);
                         if(tips == null) {
-                            return ErrorResponse.create("The subtangle is not solid");
+                            return ErrorResponse.Companion.create("The subtangle is not solid");
                         }
                         return GetTransactionsToApproveResponse.create(tips[0], tips[1]);
                     } catch (RuntimeException e) {
                         log.info("Tip selection failed: " + e.getLocalizedMessage());
-                        return ErrorResponse.create(e.getLocalizedMessage());
+                        return ErrorResponse.Companion.create(e.getLocalizedMessage());
                     }
                 }
                 case "getTrytes": {
@@ -319,7 +319,7 @@ public class API {
 
                 case "interruptAttachingToTangle": {
                     pearlDiver.cancel();
-                    return AbstractResponse.createEmptyResponse();
+                    return AbstractResponse.Companion.createEmptyResponse();
                 }
                 case "removeNeighbors": {
                     List<String> uris = getParameterAsList(request,"uris",0);
@@ -331,10 +331,10 @@ public class API {
                     try {
                         final List<String> trytes = getParameterAsList(request,"trytes", TRYTES_SIZE);
                         storeTransactionStatement(trytes);
-                        return AbstractResponse.createEmptyResponse();
+                        return AbstractResponse.Companion.createEmptyResponse();
                     } catch (RuntimeException e) {
                         //transaction not valid
-                        return ErrorResponse.create("Invalid trytes input");
+                        return ErrorResponse.Companion.create("Invalid trytes input");
                     }
                 }
                 case "getMissingTransactions": {
@@ -348,7 +348,7 @@ public class API {
                 }
                 case "checkConsistency": {
                     if (invalidSubtangleStatus()) {
-                        return ErrorResponse
+                        return ErrorResponse.Companion
                                 .create("This operations cannot be executed: The subtangle has not been updated yet.");
                     }
                     final List<String> transactions = getParameterAsList(request,"tails", HASH_SIZE);
@@ -361,14 +361,14 @@ public class API {
                 default: {
                     AbstractResponse response = ixi.processCommand(command, request);
                     return response == null ?
-                            ErrorResponse.create("Command [" + command + "] is unknown") :
+                            ErrorResponse.Companion.create("Command [" + command + "] is unknown") :
                             response;
                 }
             }
 
         } catch (final ValidationException e) {
             log.info("API Validation failed: " + e.getLocalizedMessage());
-            return ErrorResponse.create(e.getLocalizedMessage());
+            return ErrorResponse.Companion.create(e.getLocalizedMessage());
         } catch (final Exception e) {
             log.error("API Exception: ", e);
             return ExceptionResponse.create(e.getLocalizedMessage());
@@ -444,10 +444,10 @@ public class API {
         for (Hash transaction : transactions) {
             TransactionViewModel txVM = TransactionViewModel.fromHash(instance.tangle, transaction);
             if (txVM.getType() == TransactionViewModel.PREFILLED_SLOT) {
-                return ErrorResponse.create("Invalid transaction, missing: " + transaction);
+                return ErrorResponse.Companion.create("Invalid transaction, missing: " + transaction);
             }
             if (txVM.getCurrentIndex() != 0) {
-                return ErrorResponse.create("Invalid transaction, not a tail: " + transaction);
+                return ErrorResponse.Companion.create("Invalid transaction, not a tail: " + transaction);
             }
 
 
@@ -475,7 +475,7 @@ public class API {
             }
         }
 
-        return CheckConsistency.create(state,info);
+        return CheckConsistency.Companion.create(state,info);
     }
 
     private double getParameterAsDouble(Map<String, Object> request, String paramName) throws ValidationException {
@@ -552,7 +552,7 @@ public class API {
                 }
             }
         } catch (URISyntaxException|RuntimeException e) {
-            return ErrorResponse.create("Invalid uri scheme: " + e.getLocalizedMessage());
+            return ErrorResponse.Companion.create("Invalid uri scheme: " + e.getLocalizedMessage());
         }
         return RemoveNeighborsResponse.create(numberOfRemovedNeighbors);
     }
@@ -566,7 +566,7 @@ public class API {
             }
         }
         if (elements.size() > maxGetTrytes){
-            return ErrorResponse.create(overMaxErrorMessage);
+            return ErrorResponse.Companion.create(overMaxErrorMessage);
         }
         return GetTrytesResponse.create(elements);
     }
@@ -707,7 +707,7 @@ public class API {
         for (final Hash tip : tips) {
             TransactionViewModel transactionViewModel = TransactionViewModel.fromHash(instance.tangle, tip);
             if (transactionViewModel.getType() == TransactionViewModel.PREFILLED_SLOT){
-                return ErrorResponse.create("One of the tips absents");
+                return ErrorResponse.Companion.create("One of the tips absents");
             }
             int snapshotIndex = transactionViewModel.snapshotIndex();
             sameIndexTips.putIfAbsent(snapshotIndex, new LinkedList<>());
@@ -726,7 +726,7 @@ public class API {
             if (sameIndexTip != null) {
                 //has tips in the same index level
                 if (!exhaustiveSearchWithinIndex(sameIndexTip, analyzedTips, transactions, inclusionStates, sameIndexTransactionCount.get(index), index)) {
-                    return ErrorResponse.create("The subtangle is not solid");
+                    return ErrorResponse.Companion.create("The subtangle is not solid");
                 }
             }
         }
@@ -835,7 +835,7 @@ public class API {
             foundTransactions.retainAll(approveeTransactions);
         }
         if (foundTransactions.size() > maxFindTxs){
-            return ErrorResponse.create(overMaxErrorMessage);
+            return ErrorResponse.Companion.create(overMaxErrorMessage);
         }
 
         final List<String> elements = foundTransactions.stream()
@@ -883,7 +883,7 @@ public class API {
     private AbstractResponse getBalancesStatement(final List<String> addrss, final List<String> tips, final int threshold) throws Exception {
 
         if (threshold <= 0 || threshold > 100) {
-            return ErrorResponse.create("Illegal 'threshold'");
+            return ErrorResponse.Companion.create("Illegal 'threshold'");
         }
 
         final List<Hash> addresses = addrss.stream().map(address -> (new Hash(address)))
@@ -914,10 +914,10 @@ public class API {
             diff = new HashMap<>();
             for (Hash tip : hashes) {
                 if (!TransactionViewModel.exists(instance.tangle, tip)) {
-                    return ErrorResponse.create("Tip not found: " + tip.toString());
+                    return ErrorResponse.Companion.create("Tip not found: " + tip.toString());
                 }
                 if (!instance.ledgerValidator.updateDiff(visitedHashes, diff, tip)) {
-                    return ErrorResponse.create("Tips are not consistent");
+                    return ErrorResponse.Companion.create("Tips are not consistent");
                 }
             }
             diff.forEach((key, value) -> balances.computeIfPresent(key, (hash, aLong) -> value + aLong));
@@ -1026,9 +1026,9 @@ public class API {
                 }
             }
         } catch (URISyntaxException|RuntimeException e) {
-            return ErrorResponse.create("Invalid uri scheme: " + e.getLocalizedMessage());
+            return ErrorResponse.Companion.create("Invalid uri scheme: " + e.getLocalizedMessage());
         }
-        return AddedNeighborsResponse.create(numberOfAddedNeighbors);
+        return AddedNeighborsResponse.Companion.create(numberOfAddedNeighbors);
     }
 
     private void sendResponse(final HttpServerExchange exchange, final AbstractResponse res, final long beginningTime)

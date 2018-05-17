@@ -112,7 +112,7 @@ class ReplicatorSourceProcessor implements Runnable {
             // Read neighbors tcp listener port number.
             InputStream stream = connection.getInputStream();
             offset = 0;
-            while (((count = stream.read(data, offset, ReplicatorSinkPool.PORT_BYTES - offset)) != -1) && (offset < ReplicatorSinkPool.PORT_BYTES)) {
+            while (((count = stream.read(data, offset, ReplicatorSinkPool.Companion.getPORT_BYTES() - offset)) != -1) && (offset < ReplicatorSinkPool.Companion.getPORT_BYTES())) {
                 offset += count;
             }
           
@@ -122,7 +122,7 @@ class ReplicatorSourceProcessor implements Runnable {
             }
             
             byte [] pbytes = new byte [10];
-            System.arraycopy(data, 0, pbytes, 0, ReplicatorSinkPool.PORT_BYTES);
+            System.arraycopy(data, 0, pbytes, 0, ReplicatorSinkPool.Companion.getPORT_BYTES());
             neighbor.setTcpPort((int)Long.parseLong(new String(pbytes)));
             
             if (neighbor.getSink() == null) {
@@ -139,8 +139,8 @@ class ReplicatorSourceProcessor implements Runnable {
             offset = 0;
             while (!shutdown && !neighbor.isStopped()) {
 
-                while ( ((count = stream.read(data, offset, (packetSize- offset + ReplicatorSinkProcessor.CRC32_BYTES))) != -1)
-                        && (offset < (packetSize + ReplicatorSinkProcessor.CRC32_BYTES))) {
+                while ( ((count = stream.read(data, offset, (packetSize- offset + ReplicatorSinkProcessor.Companion.getCRC32_BYTES()))) != -1)
+                        && (offset < (packetSize + ReplicatorSinkProcessor.Companion.getCRC32_BYTES()))) {
                     offset += count;
                 }
               
@@ -156,13 +156,13 @@ class ReplicatorSourceProcessor implements Runnable {
                         crc32.update(data[i]);
                     }
                     String crc32_string = Long.toHexString(crc32.getValue());
-                    while (crc32_string.length() < ReplicatorSinkProcessor.CRC32_BYTES) {
+                    while (crc32_string.length() < ReplicatorSinkProcessor.Companion.getCRC32_BYTES()) {
                         crc32_string = "0"+crc32_string;
                     }
                     byte [] crc32_bytes = crc32_string.getBytes();
                     
                     boolean crcError = false;
-                    for (int i=0; i<ReplicatorSinkProcessor.CRC32_BYTES; i++) {
+                    for (int i = 0; i< ReplicatorSinkProcessor.Companion.getCRC32_BYTES(); i++) {
                         if (crc32_bytes[i] != data[packetSize + i]) {
                             crcError = true;
                             break;

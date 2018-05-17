@@ -104,9 +104,9 @@ public class RocksDBPersistenceProvider implements PersistenceProvider {
     @Override
     public void shutdown() {
         for (final ColumnFamilyHandle columnFamilyHandle : columnFamilyHandles) {
-            IotaIOUtils.closeQuietly(columnFamilyHandle);
+            IotaIOUtils.Companion.closeQuietly(columnFamilyHandle);
         }
-        IotaIOUtils.closeQuietly(db, options, bloomFilter);
+        IotaIOUtils.Companion.closeQuietly(db, options, bloomFilter);
     }
 
     @Override
@@ -456,7 +456,7 @@ public class RocksDBPersistenceProvider implements PersistenceProvider {
 
         } catch (Exception e) {
             log.error("Error while initializing RocksDb", e);
-            IotaIOUtils.closeQuietly(db);
+            IotaIOUtils.Companion.closeQuietly(db);
         }
     }
 

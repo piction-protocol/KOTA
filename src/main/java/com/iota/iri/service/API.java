@@ -192,7 +192,7 @@ public class API {
 
             final Map<String, Object> request = gson.fromJson(requestString, Map.class);
             if (request == null) {
-                return ExceptionResponse.create("Invalid request payload: '" + requestString + "'");
+                return ExceptionResponse.Companion.create("Invalid request payload: '" + requestString + "'");
             }
 
             final String command = (String) request.get("command");
@@ -275,7 +275,7 @@ public class API {
                 }
                 case "getNodeInfo": {
                     String name = instance.configuration.booling(Configuration.DefaultConfSettings.TESTNET) ? IRI.TESTNET_NAME : IRI.MAINNET_NAME;
-                    return GetNodeInfoResponse.create(name, IRI.VERSION, Runtime.getRuntime().availableProcessors(),
+                    return GetNodeInfoResponse.Companion.create(name, IRI.VERSION, Runtime.getRuntime().availableProcessors(),
                             Runtime.getRuntime().freeMemory(), System.getProperty("java.version"), Runtime.getRuntime().maxMemory(),
                             Runtime.getRuntime().totalMemory(), instance.milestone.latestMilestone, instance.milestone.latestMilestoneIndex,
                             instance.milestone.latestSolidSubtangleMilestone, instance.milestone.latestSolidSubtangleMilestoneIndex, instance.milestone.milestoneStartIndex,
@@ -371,7 +371,7 @@ public class API {
             return ErrorResponse.Companion.create(e.getLocalizedMessage());
         } catch (final Exception e) {
             log.error("API Exception: ", e);
-            return ExceptionResponse.create(e.getLocalizedMessage());
+            return ExceptionResponse.Companion.create(e.getLocalizedMessage());
         }
     }
 
@@ -666,7 +666,7 @@ public class API {
     }
 
     private AbstractResponse getNeighborsStatement() {
-        return GetNeighborsResponse.create(instance.node.getNeighbors());
+        return GetNeighborsResponse.Companion.create(instance.node.getNeighbors());
     }
 
     private AbstractResponse getNewInclusionStateStatement(final List<String> trans, final List<String> tps) throws Exception {
@@ -735,7 +735,7 @@ public class API {
             inclusionStatesBoolean[i] = inclusionStates[i] == 1;
         }
         {
-            return GetInclusionStatesResponse.create(inclusionStatesBoolean);
+            return GetInclusionStatesResponse.Companion.create(inclusionStatesBoolean);
         }
     }
     private boolean exhaustiveSearchWithinIndex(Queue<Hash> nonAnalyzedTransactions, Set<Hash> analyzedTips, List<Hash> transactions, int[] inclusionStates, int count, int index) throws Exception {
@@ -842,7 +842,7 @@ public class API {
                 .map(Hash::toString)
                 .collect(Collectors.toCollection(LinkedList::new));
 
-        return FindTransactionsResponse.create(elements);
+        return FindTransactionsResponse.Companion.create(elements);
     }
 
     private String padTag(String tag) throws ValidationException {
@@ -928,7 +928,7 @@ public class API {
         final List<String> elements = addresses.stream().map(address -> balances.get(address).toString())
                 .collect(Collectors.toCollection(LinkedList::new));
 
-        return GetBalancesResponse.create(elements, hashes.stream().map(h -> h.toString()).collect(Collectors.toList()), index);
+        return GetBalancesResponse.Companion.create(elements, hashes.stream().map(h -> h.toString()).collect(Collectors.toList()), index);
     }
 
     private static int counter_PoW = 0;

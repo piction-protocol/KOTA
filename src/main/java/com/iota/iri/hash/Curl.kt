@@ -164,7 +164,6 @@ class Curl : Sponge {
     }
 
     companion object {
-
         val NUMBER_OF_ROUNDSP81 = 81
         val NUMBER_OF_ROUNDSP27 = 27
         private val STATE_LENGTH = 3 * Sponge.HASH_LENGTH

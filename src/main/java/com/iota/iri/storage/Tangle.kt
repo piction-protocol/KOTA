@@ -56,7 +56,7 @@ class Tangle {
     }
 
     @Throws(Exception::class)
-    fun save(model: Persistable, index: Indexable): Boolean? {
+    fun save(model: Persistable, index: Indexable?): Boolean {
         var exists = false
         for (provider in persistenceProviders) {
             if (exists) {
@@ -69,7 +69,7 @@ class Tangle {
     }
 
     @Throws(Exception::class)
-    fun delete(model: Class<*>, index: Indexable) {
+    fun delete(model: Class<*>, index: Indexable?) {
         for (provider in persistenceProviders) {
             provider.delete(model, index)
         }
@@ -167,7 +167,7 @@ class Tangle {
     }
 
     @Throws(Exception::class)
-    fun next(model: Class<*>, index: Indexable): Pair<Indexable, Persistable>? {
+    fun next(model: Class<*>, index: Indexable?): Pair<Indexable, Persistable>? {
         var latest: Pair<Indexable, Persistable>? = null
         for (provider in persistenceProviders) {
             if (latest == null) {

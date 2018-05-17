@@ -274,8 +274,8 @@ public class API {
                     return getNeighborsStatement();
                 }
                 case "getNodeInfo": {
-                    String name = instance.configuration.booling(Configuration.DefaultConfSettings.TESTNET) ? IRI.TESTNET_NAME : IRI.MAINNET_NAME;
-                    return GetNodeInfoResponse.Companion.create(name, IRI.VERSION, Runtime.getRuntime().availableProcessors(),
+                    String name = instance.configuration.booling(Configuration.DefaultConfSettings.TESTNET) ? IRI.INSTANCE.getTESTNET_NAME() : IRI.INSTANCE.getMAINNET_NAME();
+                    return GetNodeInfoResponse.Companion.create(name, IRI.INSTANCE.getVERSION(), Runtime.getRuntime().availableProcessors(),
                             Runtime.getRuntime().freeMemory(), System.getProperty("java.version"), Runtime.getRuntime().maxMemory(),
                             Runtime.getRuntime().totalMemory(), instance.milestone.latestMilestone, instance.milestone.latestMilestoneIndex,
                             instance.milestone.latestSolidSubtangleMilestone, instance.milestone.latestSolidSubtangleMilestoneIndex, instance.milestone.milestoneStartIndex,
@@ -401,7 +401,7 @@ public class API {
                 }
                 //pending
                 Hash tail = findTail(hash);
-                if (tail != null && BundleValidator.validate(instance.tangle, tail).size() != 0) {
+                if (tail != null && BundleValidator.INSTANCE.validate(instance.tangle, tail).size() != 0) {
                     return true;
                 }
             }
@@ -455,7 +455,7 @@ public class API {
                 state = false;
                 info = "tails are not solid (missing a referenced tx): " + transaction;
                 break;
-            } else if (BundleValidator.validate(instance.tangle, txVM.getHash()).size() == 0) {
+            } else if (BundleValidator.INSTANCE.validate(instance.tangle, txVM.getHash()).size() == 0) {
                 state = false;
                 info = "tails are not consistent (bundle is invalid): " + transaction;
                 break;

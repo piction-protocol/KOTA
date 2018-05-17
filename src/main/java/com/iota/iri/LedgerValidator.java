@@ -75,7 +75,7 @@ public class LedgerValidator {
 
                             boolean validBundle = false;
 
-                            final List<List<TransactionViewModel>> bundleTransactions = BundleValidator.validate(tangle, transactionViewModel.getHash());
+                            final List<List<TransactionViewModel>> bundleTransactions = BundleValidator.INSTANCE.validate(tangle, transactionViewModel.getHash());
                             /*
                             for(List<TransactionViewModel> transactions: bundleTransactions) {
                                 if (transactions.size() > 0) {
@@ -88,7 +88,7 @@ public class LedgerValidator {
                             */
                             for (final List<TransactionViewModel> bundleTransactionViewModels : bundleTransactions) {
 
-                                if(BundleValidator.isInconsistent(bundleTransactionViewModels)) {
+                                if(BundleValidator.INSTANCE.isInconsistent(bundleTransactionViewModels)) {
                                     break;
                                 }
                                 if (bundleTransactionViewModels.get(0).getHash().equals(transactionViewModel.getHash())) {

@@ -72,7 +72,7 @@ public class APIIntegrationTests {
             configuration = new Configuration();
             String[] args = {"-p", portStr};
             configuration.put(Configuration.DefaultConfSettings.TESTNET, "true");
-            IRI.validateParams(configuration, args);
+            IRI.INSTANCE.validateParams(configuration, args);
             TemporaryFolder dbFolder = new TemporaryFolder();
             TemporaryFolder logFolder = new TemporaryFolder();
             dbFolder.create();

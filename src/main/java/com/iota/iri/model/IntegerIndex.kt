@@ -13,7 +13,7 @@ class IntegerIndex(var value: Int) : Indexable {
         return Serializer.serialize(value)
     }
 
-    override fun read(bytes: ByteArray) {
+    override fun read(bytes: ByteArray?) {
         this.value = Serializer.getInteger(bytes)
     }
 

@@ -86,9 +86,9 @@ class Transaction : Persistable {
         return buffer.array()
     }
 
-    override fun readMetadata(bytes: ByteArray?) {
+    override fun readMetadata(bytes: ByteArray) {
         var i = 0
-        if (bytes != null) {
+        bytes?.let {
             address = Hash(bytes, i, Hash.SIZE_IN_BYTES)
             i += Hash.SIZE_IN_BYTES
             bundle = Hash(bytes, i, Hash.SIZE_IN_BYTES)

@@ -112,7 +112,6 @@ class TransactionValidator(private val tangle: Tangle, private val tipsViewModel
                     }
                 }
                 val cascadeIterator = newSolidHashes.iterator()
-                val hashesToCascade = HashSet<Hash>()
                 while (cascadeIterator.hasNext() && !shuttingDown.get()) {
                     try {
                         val hash = cascadeIterator.next()

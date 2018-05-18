@@ -237,7 +237,7 @@ class Milestone(private val tangle: Tangle,
         try {
             val request = "token=" + URLEncoder.encode("<botToken>", "UTF-8") + "&channel=" + URLEncoder.encode("#botbox", "UTF-8") + "&text=" + URLEncoder.encode("TESTNET: ", "UTF-8") + "&as_user=true"
             val connection = URL("https://slack.com/api/chat.postMessage").openConnection() as HttpsURLConnection
-            connection.setHostnameVerifier { hostname, session -> true }
+            connection.setHostnameVerifier { _, _ -> true }
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
             connection.requestMethod = "POST"
             connection.doOutput = true

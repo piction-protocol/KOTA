@@ -46,7 +46,7 @@ class MilestoneViewModel {
 
     @Throws(Exception::class)
     fun store(tangle: Tangle): Boolean {
-        return tangle.save(milestone, milestone.index)!!
+        return tangle.save(milestone, milestone.index)
     }
 
     fun index(): Int? {

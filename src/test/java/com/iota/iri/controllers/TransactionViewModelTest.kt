@@ -431,7 +431,7 @@ class TransactionViewModelTest {
     private fun getRandomTransaction(seed: Random): Transaction {
         val transaction = Transaction()
 
-        val trits = Arrays.stream(IntArray(TransactionViewModel.SIGNATURE_MESSAGE_FRAGMENT_TRINARY_SIZE)).map { i -> seed.nextInt(3) - 1 }.toArray()
+        val trits = Arrays.stream(IntArray(TransactionViewModel.SIGNATURE_MESSAGE_FRAGMENT_TRINARY_SIZE)).map { _ -> seed.nextInt(3) - 1 }.toArray()
         transaction.bytes = Converter.allocateBytesForTrits(trits.size)
         Converter.bytes(trits, 0, transaction.bytes, 0, trits.size)
         return transaction
@@ -475,8 +475,8 @@ class TransactionViewModelTest {
         }
 
         val randomTransactionTrits: IntArray
-            get() = Arrays.stream(IntArray(TransactionViewModel.TRINARY_SIZE)).map { i -> seed.nextInt(3) - 1 }.toArray()
+            get() = Arrays.stream(IntArray(TransactionViewModel.TRINARY_SIZE)).map { _ -> seed.nextInt(3) - 1 }.toArray()
         val randomTransactionHash: Hash
-            get() = Hash(Arrays.stream(IntArray(Hash.SIZE_IN_TRITS)).map { i -> seed.nextInt(3) - 1 }.toArray())
+            get() = Hash(Arrays.stream(IntArray(Hash.SIZE_IN_TRITS)).map { _ -> seed.nextInt(3) - 1 }.toArray())
     }
 }

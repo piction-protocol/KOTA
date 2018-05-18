@@ -33,7 +33,7 @@ class StateDiffViewModel {
 
     @Throws(Exception::class)
     fun store(tangle: Tangle): Boolean {
-        return tangle.save(stateDiff, hash)!!
+        return tangle.save(stateDiff, hash)
     }
 
     @Throws(Exception::class)

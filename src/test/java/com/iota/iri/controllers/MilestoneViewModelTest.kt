@@ -191,7 +191,7 @@ class MilestoneViewModelTest {
         MilestoneViewModel(next, Hash("GBCDEBGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUV99999")).store(tangle)
         MilestoneViewModel(first, Hash("GBCDEFGHIJKLMNODQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUV99999")).store(tangle)
         assertEquals(next.toLong(), MilestoneViewModel.findClosestNextMilestone(
-                tangle, first, false, milestoneStartIndex)!!.index()!!.toInt().toLong())
+                tangle, first, false, milestoneStartIndex)?.index()?.toLong())
     }
 
     @Test
@@ -201,7 +201,7 @@ class MilestoneViewModelTest {
         val next = 9
         MilestoneViewModel(next, Hash("GBCDEBGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUV99999")).store(tangle)
         MilestoneViewModel(first, Hash("GBCDEFGHIJKLMNODQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUVWXYZ9ABCDEFGHIJKLMNOPQRSTUV99999")).store(tangle)
-        assertEquals(first.toLong(), MilestoneViewModel.findClosestPrevMilestone(tangle, next)!!.index()!!.toInt().toLong())
+        assertEquals(first.toLong(), MilestoneViewModel.findClosestPrevMilestone(tangle, next)?.index()?.toLong())
     }
 
     companion object {

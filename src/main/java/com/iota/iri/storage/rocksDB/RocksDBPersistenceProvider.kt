@@ -200,17 +200,26 @@ class RocksDBPersistenceProvider(private val dbPath: String, private val logPath
             return PAIR_OF_NULLS
         }
 
-        val indexable = index.newInstance()
-        indexable.read(iterator.key())
+        try {
+            val indexable = index.newInstance()
+            indexable.read(iterator.key())
 
-        val `object` = model.newInstance() as Persistable
-        `object`.read(iterator.value())
+            val opersistable = model.newInstance()
 
-        val referenceHandle = metadataReference!![model]
-        if (referenceHandle != null) {
-            `object`.readMetadata(db.get(referenceHandle, iterator.key()))
+            if (opersistable is Persistable) {
+                opersistable.read(iterator.value())
+
+                val referenceHandle = metadataReference!![model]
+                if (referenceHandle != null) {
+                    opersistable.readMetadata(db.get(referenceHandle, iterator.key()))
+                }
+                return Pair(indexable, opersistable)
+            } else
+                return Pair(indexable, null)
+        } catch (e: InstantiationException) {
+
         }
-        return Pair(indexable, `object`)
+        return Pair(null, null)
     }
 
     @Throws(Exception::class)

@@ -211,7 +211,7 @@ public class TransactionViewModel {
     }
 
     public ApproveeViewModel getApprovers(Tangle tangle) throws Exception {
-        if(approovers == null) {
+        if(approovers == null && hash != null) {
             approovers = ApproveeViewModel.Companion.load(tangle, hash);
         }
         return approovers;

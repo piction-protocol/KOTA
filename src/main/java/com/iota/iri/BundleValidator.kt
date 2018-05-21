@@ -139,7 +139,7 @@ object BundleValidator {
                 */
             }
         }
-        return value != 0L || transactionViewModels.size == 0
+        return value != 0L || transactionViewModels.isEmpty()
     }
 
     private fun loadTransactionsFromTangle(tangle: Tangle, tail: TransactionViewModel): Map<Hash, TransactionViewModel> {

@@ -243,17 +243,6 @@ public class TransactionViewModel {
         return hash;
     }
 
-    public AddressViewModel getAddress(Tangle tangle) throws Exception {
-        if(address == null) {
-            address = AddressViewModel.Companion.load(tangle, getAddressHash());
-        }
-        return address;
-    }
-
-    public TagViewModel getTag(Tangle tangle) throws Exception {
-        return TagViewModel.Companion.load(tangle, getTagValue());
-    }
-
     public Hash getAddressHash() {
         if(transaction.getAddress() == null) {
             transaction.setAddress(new Hash(trits(), ADDRESS_TRINARY_OFFSET));
@@ -302,13 +291,6 @@ public class TransactionViewModel {
     }
 
     public long getAttachmentTimestamp() { return transaction.getAttachmentTimestamp(); }
-    public long getAttachmentTimestampLowerBound() {
-        return transaction.getAttachmentTimestampLowerBound();
-    }
-    public long getAttachmentTimestampUpperBound() {
-        return transaction.getAttachmentTimestampUpperBound();
-    }
-
 
     public long value() {
         return transaction.getValue();
@@ -365,10 +347,6 @@ public class TransactionViewModel {
 
     public static boolean exists(Tangle tangle, Hash hash) throws Exception {
         return tangle.exists(Transaction.class, hash);
-    }
-
-    public static Set<Indexable> getMissingTransactions(Tangle tangle) throws Exception {
-        return tangle.keysWithMissingReferences(Approvee.class, Transaction.class);
     }
 
     public static void updateSolidTransactions(Tangle tangle, final Set<Hash> analyzedHashes) throws Exception {
@@ -450,8 +428,5 @@ public class TransactionViewModel {
 
     public void updateSender(String sender) throws Exception {
         transaction.setSender(sender);
-    }
-    public String getSender() {
-        return transaction.getSender();
     }
 }

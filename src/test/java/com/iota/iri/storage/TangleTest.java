@@ -22,8 +22,7 @@ import java.util.Set;
  * Created by paul on 3/3/17 for iri.
  */
 public class TangleTest {
-    private final TemporaryFolder dbFolder = new TemporaryFolder();
-    private final TemporaryFolder logFolder = new TemporaryFolder();
+
     private Tangle tangle = new Tangle();
 
     @Before
@@ -67,25 +66,4 @@ public class TangleTest {
         Set<Indexable> tag = tangle.keysStartingWith(Transaction.class, Arrays.copyOf(transactionViewModel.getTagValue().bytes(), 15));
         //Assert.assertNotEquals(tag.length, 0);
     }
-
-    @Test
-    public void get() throws Exception {
-        /*
-        Transaction transaction = new Transaction();
-        Random r = new Random();
-        int[] hash = new int[Curl.HASH_LENGTH],
-                trits = Arrays.stream(new int[TransactionViewModel.TRINARY_SIZE])
-                        .map(i -> r.nextInt(3)-1).toArray();
-        Curl curl = new Curl();
-        curl.absorb(trits, 0, trits.length);
-        curl.squeeze(hash, 0, Curl.HASH_LENGTH);
-        transaction.value = Converter.value(trits);
-        byte[] byteHash = Converter.value(hash);
-
-        transaction = (Transaction) Tangle.instance().load(Transaction.class, byteHash).get();
-        assertNotNull(transaction);
-        assertArrayEquals(transaction.hash, byteHash);
-        */
-    }
-
 }

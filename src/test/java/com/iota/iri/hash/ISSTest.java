@@ -106,7 +106,5 @@ public class ISSTest {
             System.out.println(String.format("%s,%s,%s,%s,%s", seed, addresses[0],addresses[1],addresses[2],addresses[3]));
 
         }
-
     }
-
 }
